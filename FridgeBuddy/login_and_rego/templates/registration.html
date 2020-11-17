@@ -21,7 +21,7 @@
         {% endif %}
 
         <form class="ui form" action="/registration" method="post">
-            {% crsf_token %}
+            {% csrf_token %}
             <input type="text" name="first_name" placeholder="First Name"><br>
             <input type="text" name="last_name" placeholder="Last Name"><br>
             <input type="text" name="email" placeholder="Email Address"><br>

@@ -1,18 +1,35 @@
 from django.db import models
+from .login_and_rego.models import User
 
-# Create your models here.
-class User(models.Model):
-    fname = models.CharField(max_length=255)
-    lname = models.CharField(max_length=255)
-    email = models.EmailField()
-    password = models.CharField(max_length=255)
-    created_at = models.DateTimeField(auto_now_add=True)
-    last_updated = models.DateTimeField(auto_now=True)
+class FridgeManager(models.Manager): 
+    def create_fridge_validator(self, post_data):
+        errors = {}
+
+        # FRIDGE NAME VALIDATOR
+        if len(post_data['fridge_name']) == 0:
+            errors['fridge_name'] = "Please enter a fridge name."
+
+
+        # PASSWORD VALIDATOR
+        if len(post_data['fridge_password']) < 8:
+            errors['password'] = "Password must be over 8 characters."
+
+        if post_data['fridge_password'] != post_data['confirm_fridge_password']:
+            errors['confirm_fridge_password'] = "Passwords entered do not match!"
+
+        return errors
+
+    def login_fridge(self, post_data):
+
+        # FRIDGE NAME VALIDATOR
+        if len(post_data['login_fridge_name']) == 0:
+            errors['fridge_name'] = "Please enter a fridge name."
+
+        return errors
 
 class Fridge(models.Model):
     name = models.CharField(max_length=255)
     password = models.CharField(max_length=255)
-    members = models.ForeignKey(User, related_name="fridge", on_delete=models.CASCADE, default=None)
     created_at = models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now=True)
 
