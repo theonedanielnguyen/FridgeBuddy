@@ -19,7 +19,7 @@ class FridgeManager(models.Manager):
 
         return errors
 
-    def login_fridge(self, post_data):
+    def join_fridge_validator(self, post_data):
 
         # FRIDGE NAME VALIDATOR
         if len(post_data['login_fridge_name']) == 0:
