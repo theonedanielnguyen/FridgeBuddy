@@ -8,16 +8,16 @@
 <body>
     <div class="container">
         <header>
-            <h1>Welcome User</h1>
+            <h1>Welcome {{user.fname}}</h1>
             <button>Log Out</button>
         </header>
 
         <div id="shopping_list_container">
             <div class="col">
                 <h3>Add Items</h3>
-                <form action="">
-                    <input type="text" name="ingredient" id="ingredient">
-                    <input type="number" name="quantity" id="quantity">
+                <form action="/add_to_list">
+                    <input type="text" name="ingredient" id="ingredient" placeholder="Ingredient Name">
+                    <input type="number" name="quantity" id="quantity" placeholder=0>
                     <select name="unit" id="unit">
                         <option value="oz">oz</option>
                         <option value="gram">gram</option>
@@ -41,9 +41,9 @@
             </div>
             <div class="col">
                 <h3>Remove Items</h3>
-                <form action="">
-                    <input type="text" name="ingredient" id="ingredient">
-                    <input type="number" name="quantity" id="quantity">
+                <form action="/remove_from_list">
+                    <input type="text" name="ingredient" id="ingredient" placeholder="Ingredient Name">
+                    <input type="number" name="quantity" id="quantity" placeholder=0>
                     <select name="unit" id="unit">
                         <option value="oz">oz</option>
                         <option value="gram">gram</option>

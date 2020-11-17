@@ -1,8 +1,17 @@
 from django.db import models
 from fridge.models import Fridge
-from login_and_rego.models import User
+
 
 # Create your models here.
+class ShoppingIngredientManager(models.Manager):
+    def add_validator(self, postData):
+        errors = {}
+        if len(postData['ingredient']) < 3:
+            errors['ingredient_name'] = "Ingredient Name must be 3 characters or more"
+        if postData['quantity'] <= 0:
+            errors['bad_quantity'] = "Can not have a value of or less than 0"
+        return errors
+
 class ShoppingList(models.Model):
     fridge = models.OneToOneField(Fridge, related_name="shopping_list", on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -16,3 +25,4 @@ class ShoppingIngredient(models.Model):
     shopping_list = models.ForeignKey(ShoppingList, related_name="contents", on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now=True)
+    objects = ShoppingIngredientManager()

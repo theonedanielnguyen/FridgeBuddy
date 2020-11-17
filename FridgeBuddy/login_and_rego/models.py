@@ -1,5 +1,7 @@
 from django.db import models
 import re
+from fridge.models import Fridge
+from shopping_list.models import ShoppingList
 
 class UserManager(models.Manager):
     def rego_validator(self, post_data):
@@ -46,6 +48,7 @@ class User(models.Model):
     last_name = models.CharField(max_length=60)
     email = models.EmailField(max_length=100)
     password = models.CharField(max_length=100)
+    fridge = models.ForeignKey(Fridge, related_name="members", on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     objects = UserManager()
