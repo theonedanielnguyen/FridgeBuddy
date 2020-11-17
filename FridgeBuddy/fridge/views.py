@@ -90,6 +90,10 @@ def join_fridge(request):
 
                 print(f'Successful! {logged_user.first_name} {logged_user.last_name} is logged in!')
 
+                online_user = User.objects.get(id=request.session['user_id'])
+                online_user.fridge = this_fridge
+                online_user.save()
+
                 return redirect('/fridge')
 
     messages.error(request, "Sorry, fridge name and password don't match.")
