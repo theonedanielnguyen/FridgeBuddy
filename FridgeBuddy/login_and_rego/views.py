@@ -38,7 +38,7 @@ def registration(request):
 
         print(f'Successful! {new_first_name} {new_last_name} is now registered!')
 
-        return redirect('/fridge')
+        return redirect('/new_fridge')
 
 def login(request): 
     login_errors = User.objects.login_validator(request.POST)
