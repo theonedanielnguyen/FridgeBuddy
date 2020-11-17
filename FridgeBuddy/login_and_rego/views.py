@@ -38,7 +38,7 @@ def registration(request):
 
         print(f'Successful! {new_first_name} {new_last_name} is now registered!')
 
-        return redirect('/trips')
+        return redirect('/fridge')
 
 def login(request): 
     login_errors = User.objects.login_validator(request.POST)
@@ -59,7 +59,7 @@ def login(request):
 
                 print(f'Successful! {logged_user.first_name} {logged_user.last_name} is logged in!')
 
-                return redirect('/trips')
+                return redirect('/fridge')
 
         
         messages.error(request, "Sorry, username and password don't match.", extra_tags="login")
