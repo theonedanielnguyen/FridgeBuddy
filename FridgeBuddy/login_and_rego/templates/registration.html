@@ -6,6 +6,35 @@
     <title>Fridge Buddy Registration</title>
 </head>
 <body>
+
+    <div class="registration">
+        <h2>REGISTRATION</h2>
+
+        {% if messages %}
+            <ul>
+                {% for message in messages %} 
+                    {% if 'registration' in message.extra_tags %}
+                        <li>{{ message }}</li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <form class="ui form" action="/registration" method="post">
+            {% crsf_token %}
+            <input type="text" name="first_name" placeholder="First Name"><br>
+            <input type="text" name="last_name" placeholder="Last Name"><br>
+            <input type="text" name="email" placeholder="Email Address"><br>
+            <input type="password" name="password" placeholder="Password"><br>
+            <input type="password" name="confirm_password" placeholder="Confirm Password"><br>
+            <button class="ui button" type="submit">REGISTRATION</button>
+        </form>
+    </div>
+
+    <p>Already have an account? Log in <a href="/login_page">Here</a>!</p>
+
+</div>
+
     
 </body>
 </html>
