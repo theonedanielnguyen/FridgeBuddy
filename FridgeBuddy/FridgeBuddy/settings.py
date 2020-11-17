@@ -32,6 +32,8 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'fridge',
+    'shopping_list',
+    'meal_plan',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
