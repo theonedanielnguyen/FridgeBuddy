@@ -30,7 +30,6 @@ class FridgeManager(models.Manager):
 class Fridge(models.Model):
     name = models.CharField(max_length=255)
     password = models.CharField(max_length=255)
-    members = models.ForeignKey('login_and_rego.User', related_name="fridge", on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now=True)
 
