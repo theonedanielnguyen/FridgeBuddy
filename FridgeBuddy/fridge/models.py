@@ -12,7 +12,7 @@ class User(models.Model):
 class Fridge(models.Model):
     name = models.CharField(max_length=255)
     password = models.CharField(max_length=255)
-    members = models.ForeignKey(User, related_name="fridge", on_delete=models.CASCADE)
+    members = models.ForeignKey(User, related_name="fridge", on_delete=models.CASCADE, default=None)
     created_at = models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now=True)
 
