@@ -1,5 +1,5 @@
 from django.db import models
-from .login_and_rego.models import User
+
 
 class FridgeManager(models.Manager): 
     def create_fridge_validator(self, post_data):

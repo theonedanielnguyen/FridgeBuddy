@@ -8,5 +8,4 @@ urlpatterns = [
     path('/new_fridge_success', views.create_fridge_success),
     path('/join_fridge', views.join_fridge_page),
     path('/join_success', views.join_fridge)
-
 ]
