@@ -9,11 +9,27 @@
     <div class="header">
         <h1 class="logo">FRIDGEBUDDY</h1>
         <p class="welcome">WELCOME BACK {{online_user.first_name}}!</p>
-        <a href="/log-out">LOG OUT</a>
+        <a href="/log_out">LOG OUT</a>
     </div>
     <div class="content">
+        <h2>{{fridge.name.upper}}</h2>
+        <h4>Members:</h4>
+        <ul>
+        {% for member in members %}
+            <li>{{member.first_name}} {{member.last_name}}</li>
+        {% endfor %}
+        </ul>
         <div class="add-item">
             <h3>ADD ITEM TO INVENTORY</h3>
+
+            {% if messages %}
+                <ul>
+                    {% for message in messages %} 
+                            <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
             <form action="/fridge/inventory/add_item" method="POST">
                 {% csrf_token %}
                 <label>Item Name</label><br>

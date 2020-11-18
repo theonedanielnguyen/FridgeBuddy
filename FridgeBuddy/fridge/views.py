@@ -74,7 +74,7 @@ def create_fridge_success(request):
         new_fridge = Fridge.objects.create(name=new_fridge_name, password=password_hash)
         new_fridge_user.fridge = new_fridge
 
-    return redirect('/fridge')
+    return redirect('/fridge/')
 
 
 # JOINING FRIDGE
@@ -108,18 +108,40 @@ def join_fridge(request):
     return redirect('/fridge/join_fridge')
 
 
+def leave_fridge(request):
+    online_user = User.objects.get(id=request.session['user_id'])
+    online_user.fridge = ''
+
+    return redirect('/fridge/')
+
 # FRIDGE INVENTORY STUFF 
 
 def display_inventory(request):
+    if 'not_logged_in' in request.session:
+        messages.error(request, request.session['not_logged_in'], extra_tags="login")
+        del request.session['not_logged_in'] 
+
+    this_fridge = User.objects.get(id=request.session['user_id']).fridge
+
     context = {
         "online_user": User.objects.get(id=request.session['user_id']),
         "fridge": User.objects.get(id=request.session['user_id']).fridge,
-        "inventory": FridgeIngredient.objects.all()
+        "inventory": this_fridge.contents.all(),
+        "members": this_fridge.members.all()
     }
 
     return render(request, 'inventory.html', context) 
 
 def add_to_inventory(request):
+    errors = FridgeIngredient.objects.add_ingredient_validator(request.POST)
+
+    if len(errors) > 0: 
+        for key, value in errors.items():
+            messages.error(request, value)
+
+        return redirect('/fridge/inventory')
+
+
     this_fridge = User.objects.get(id=request.session['user_id']).fridge
 
     new_item_name = request.POST['item_name']
@@ -127,11 +149,12 @@ def add_to_inventory(request):
     new_item_unit = request.POST['unit']
 
     this_item = FridgeIngredient.objects.create(name=new_item_name, quantity=float(new_item_quantity), unit=new_item_unit, fridge=this_fridge)
+    this_item.fridge = this_fridge
 
-    return redirect(f'/fridge/inventory')
+    return redirect('/fridge/inventory')
 
 def remove_from_inventory(request, item_id):
     item_to_remove = FridgeIngredient.objects.get(id=item_id)
     item_to_remove.delete()
 
-    return redirect(f'/fridge/inventory')
+    return redirect('/fridge/inventory')
