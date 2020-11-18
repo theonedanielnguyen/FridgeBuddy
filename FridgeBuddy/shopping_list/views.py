@@ -17,7 +17,7 @@ def add_to_list(request):
     if len(errors)> 0:
         for message in errors.values():
             messages.error(request, message)
-        return redirect('/')
+        return redirect('/shopping_list')
     # user = User.objects.get(id=request.session['user_id'])
     ShoppingIngredient.objects.create(
         name = request.POST['ingredient'],
@@ -28,4 +28,6 @@ def add_to_list(request):
     return redirect('/shopping_list')
 
 def remove_from_list(request):
+    # user = User.objects.get(id=request.session['user_id'])
+    
     return redirect('/shopping_list')
