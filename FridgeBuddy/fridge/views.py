@@ -77,7 +77,6 @@ def create_fridge_success(request):
         ShoppingList.objects.create(fridge=new_fridge)
         new_fridge_user.fridge = new_fridge
         new_fridge_user.save()
-        print(new_fridge_user.fridge)
 
     return redirect('/fridge/')
 

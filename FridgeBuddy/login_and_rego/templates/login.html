@@ -4,40 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FridgeBuddy Login</title>
-    <link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">
-    <script
-        src="https://code.jquery.com/jquery-3.1.1.min.js"
-        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-        crossorigin="anonymous"></script>
-    <script src="semantic/dist/semantic.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
 </head>
 <body>
-    <h1>WELCOME TO FRIDGEBUDDY!</h1>
-    <div class="ui container">
-        <div class="login">
-            <h2>MEMBER LOGIN</h2>
-
-            {% if messages %}
-                <ul>
-                    {% for message in messages %} 
-                        {% if 'login' in message.extra_tags %}
-                            <li>{{ message }}</li>
+    <div class="container">
+        <nav class="navbar bg-primary text-light">
+            <h1>Welcome to FridgeBuddy!</h1>
+        </nav>
+        <div class="container">
+            <div class="row">
+                <div class="col"></div>
+                <div class="col text-center border mt-2 border-primary rounded-lg">
+                    <h2>MEMBER LOGIN</h2>
+                    <div class="container">
+                        {% if messages %}
+                            <ul>
+                                {% for message in messages %} 
+                                    {% if 'login' in message.extra_tags %}
+                                        <li>{{ message }}</li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
                         {% endif %}
-                    {% endfor %}
-                </ul>
-            {% endif %}
-
-            <form class="ui form" action="/login" method="post">
-                {% csrf_token %}
-                <input type="text" name="login-email" placeholder="Email Address"><br>
-                <input type="password" name="login-password" placeholder="Password"><br>
-                <button class="ui button" type="submit">LOGIN</button>
-            </form>
+                    </div>
+                    <form class="ui form" action="/login" method="post">
+                        {% csrf_token %}
+                        <input type="text" name="login-email" placeholder="Email Address"><br>
+                        <input type="password" name="login-password" placeholder="Password"><br>
+                        <button class="btn btn-primary mt-2" type="submit">LOGIN</button>
+                    </form>
+                    <p>New member? Register <a href="/registration_page">Here</a>!</p>
+                </div>
+                <div class="col"></div>
+            </div>
         </div>
-
-        <p>New member? Register <a href="/registration_page">Here</a>!</p>
-
     </div>
-    
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
 </body>
 </html>
