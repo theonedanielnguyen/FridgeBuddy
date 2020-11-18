@@ -1,6 +1,5 @@
 from django.db import models
 
-
 class FridgeManager(models.Manager): 
     def create_fridge_validator(self, post_data):
         errors = {}
@@ -20,10 +19,11 @@ class FridgeManager(models.Manager):
         return errors
 
     def join_fridge_validator(self, post_data):
+        errors = {}
 
         # FRIDGE NAME VALIDATOR
-        if len(post_data['login_fridge_name']) == 0:
-            errors['fridge_name'] = "Please enter a fridge name."
+        if len(post_data['existing_fridge_name']) == 0:
+            errors['existing_fridge_name'] = "Please enter a fridge name."
 
         return errors
 
@@ -32,6 +32,8 @@ class Fridge(models.Model):
     password = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now=True)
+    objects = FridgeManager()
+
 
 class FridgeIngredient(models.Model):
     name = models.CharField(max_length=255)

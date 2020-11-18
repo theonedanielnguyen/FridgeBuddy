@@ -3,34 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>(FRIDGE NAME) Inventory</title>
+    <title>{{fridge.name}} Inventory</title>
 </head>
 <body>
     <div class="header">
         <h1 class="logo">FRIDGEBUDDY</h1>
-        <p class="welcome">WELCOME BACK (online_user.first_name)!</p>
+        <p class="welcome">WELCOME BACK {{online_user.first_name}}!</p>
         <a href="/log-out">LOG OUT</a>
     </div>
     <div class="content">
         <div class="add-item">
             <h3>ADD ITEM TO INVENTORY</h3>
-            <form action="" method="POST">
+            <form action="/fridge/inventory/add_item" method="POST">
                 {% csrf_token %}
                 <label>Item Name</label><br>
-                <input type="text" name="item-name" placeholder="Item Name"><br>
+                <input type="text" name="item_name" placeholder="Item Name"><br>
                 <label>How Much</label><br>
-                <input type="number" min="0" name="quantity" placeholder="0">
+                <input type="number" min="0" step="0.01" name="quantity" placeholder="0">
                 <select name="unit">
                     <option value="of them">of them</option>
-                    <option value="bottles">bottles</option>
-                    <option value="boxes">boxes</option>
-                    <option value="cans">cans</option>
-                    <option value="grams">grams</option>
-                    <option value="kilos">kilos</option>
+                    <option value="bottles">bottle(s)</option>
+                    <option value="boxes">box(es)</option>
+                    <option value="cans">can(s)</option>
+                    <option value="grams">gram(s)</option>
+                    <option value="kilos">kilo(s)</option>
                     <option value="pounds">lbs</option>
                     <option value="ounces">oz</option>
-                    <option value="liters">litres</option>
-                    <option value="milliliters">milliliters</option>
+                    <option value="liters">litre(s)</option>
+                    <option value="milliliters">milliliter(s)</option>
+                    <option value="pints">pint(s)</option>
                     <option value="%">%</option>
                 </select><br>
                 <button type="submit">ADD ITEM!</button>
@@ -47,11 +48,12 @@
                     <tr>
                         <td>{{item.name}}</td>
                         <td>{{item.quantity}} {{item.unit}}</td>
-                        <td><a href="/fridge/inventory/delete_item/{{item.id}}"></a></td>
+                        <td><a href="/fridge/inventory/delete_item/{{item.id}}">REMOVE</a></td>
                     </tr>
                 {% endfor%}
             </table>
         </div>
+        <p><a href="/fridge/">GO BACK</a></p>
     </div>
     
 </body>
