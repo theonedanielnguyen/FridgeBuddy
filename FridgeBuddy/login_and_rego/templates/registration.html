@@ -20,7 +20,7 @@
             </ul>
         {% endif %}
 
-        <form class="ui form" action="/success" method="post">
+        <form class="ui form" action="/registration" method="post">
             {% csrf_token %}
             <input type="text" name="first_name" placeholder="First Name"><br>
             <input type="text" name="last_name" placeholder="Last Name"><br>
