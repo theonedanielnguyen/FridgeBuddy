@@ -59,7 +59,7 @@ def has_fridge_dash(request):
         "online_user": User.objects.get(id=request.session['user_id'])
     }
 
-    return render(request, "fridge_dash.html", context)
+    return render(request, "fridge_dashboard.html", context)
 
 def join_fridge_page(request):
     if 'user_id' not in request.session:

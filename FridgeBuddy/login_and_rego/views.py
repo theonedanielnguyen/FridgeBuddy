@@ -59,7 +59,7 @@ def login(request):
 
                 print(f'Successful! {logged_user.first_name} {logged_user.last_name} is logged in!')
 
-                return redirect('/fridge')
+                return redirect('/fridge/')
 
         
         messages.error(request, "Sorry, username and password don't match.", extra_tags="login")
