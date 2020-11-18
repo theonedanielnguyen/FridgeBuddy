@@ -77,6 +77,7 @@ def create_fridge_success(request):
         ShoppingList.objects.create(fridge=new_fridge)
         new_fridge_user.fridge = new_fridge
         new_fridge_user.save()
+        print(new_fridge_user.fridge)
 
     return redirect('/fridge/')
 
@@ -114,7 +115,8 @@ def join_fridge(request):
 
 def leave_fridge(request):
     online_user = User.objects.get(id=request.session['user_id'])
-    online_user.fridge = ''
+    online_user.fridge = None
+    online_user.save()
 
     return redirect('/fridge/')
 
