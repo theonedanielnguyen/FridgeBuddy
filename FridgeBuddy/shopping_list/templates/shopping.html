@@ -8,16 +8,18 @@
 <body>
     <div class="container">
         <header>
-            <h1>Welcome {{user.fname}}</h1>
-            <button>Log Out</button>
+            <h1>Welcome {{user.first_name}}</h1>
+            <button onclick="location.href='/log_out'">Log Out</button>
+            <button onclick="location.href='/fridge'">Back to Fridge</button>
         </header>
 
         <div id="shopping_list_container">
             <div class="col">
                 <h3>Add Items</h3>
-                <form action="/add_to_list">
+                <form action="/shopping_list/add_to_list" method="POST">
+                    {% csrf_token %}
                     <input type="text" name="ingredient" id="ingredient" placeholder="Ingredient Name">
-                    <input type="number" name="quantity" id="quantity" placeholder=0>
+                    <input type="number" name="quantity" id="quantity" placeholder=0 value=0>
                     <select name="unit" id="unit">
                         <option value="oz">oz</option>
                         <option value="gram">gram</option>
@@ -30,8 +32,10 @@
                 </form>
                 {% if messages %}
                     <div>    
-                        {% for message in messages %}    
-                            <p>{{ message }}</p>    
+                        {% for message in messages %}
+                            {% if 'add' in message.extra_tags%}
+                                <p>{{ message }}</p>
+                            {% endif %}
                         {% endfor %}
                     </div>
                 {% endif %}
@@ -55,9 +59,10 @@
             </div>
             <div class="col">
                 <h3>Remove Items</h3>
-                <form action="/remove_from_list">
+                <form action="/shopping_list/remove_from_list" method="POST">
+                    {% csrf_token %}
                     <input type="text" name="ingredient" id="ingredient" placeholder="Ingredient Name">
-                    <input type="number" name="quantity" id="quantity" placeholder=0>
+                    <input type="number" name="quantity" id="quantity" placeholder=0 value=0>
                     <select name="unit" id="unit">
                         <option value="oz">oz</option>
                         <option value="gram">gram</option>
@@ -68,6 +73,15 @@
                     </select>
                     <button>Remove</button>
                 </form>
+                {% if messages %}
+                    <div>    
+                        {% for message in messages %}
+                            {% if 'remove' in message.extra_tags%}
+                                <p>{{ message }}</p>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>

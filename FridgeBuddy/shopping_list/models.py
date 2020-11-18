@@ -8,8 +8,16 @@ class ShoppingIngredientManager(models.Manager):
         errors = {}
         if len(postData['ingredient']) < 3:
             errors['ingredient_name'] = "Ingredient Name must be 3 characters or more"
-        if postData['quantity'] <= 0:
-            errors['bad_quantity'] = "Can not have a value of or less than 0"
+        if int(postData['quantity']) <= 0:
+            errors['bad_quantity'] = "Can not have a value less than or equal to 0"
+        return errors
+    
+    def remove_validator(self, postData):
+        errors = {}
+        if len(postData['ingredient']) < 3:
+            errors['ingredient_name'] = "Ingredient Name must be 3 characters or more"
+        if int(postData['quantity']) <= 0:
+            errors['bad_quantity'] = "Can not have a value less than or equal to 0"
         return errors
 
 class ShoppingList(models.Model):
