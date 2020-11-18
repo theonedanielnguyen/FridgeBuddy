@@ -17,12 +17,12 @@ def registration(request):
     errors = User.objects.rego_validator(request.POST)
     if User.objects.filter(email=request.POST['email']):
         messages.error(request, 'This email already exists in the system!', extra_tags="registration")
-        return redirect('/')
+        return redirect('/registration_page')
 
     if len(errors) > 0:
         for key, value in errors.items():
             messages.error(request, value, extra_tags="registration")
-        return redirect('/')
+        return redirect('/registration_page')
 
     else: 
         new_first_name = request.POST['first_name']

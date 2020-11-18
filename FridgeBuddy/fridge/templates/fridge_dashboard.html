@@ -20,7 +20,7 @@
         <a href="/log_out">LOG OUT</a>
     </div><br>
 
-    {% if online_user.fridge == NULL %}
+    {% if online_user.fridge == NULL or online_user.fridge == '' %}
 
     <div class="content">
         <p>Would you like to</p>
@@ -43,6 +43,8 @@
         <a class="shopping-list" href="/shopping_list">Shopping List</a>
         <a class="meal-plan" href="">Meal Plan</a>
         <a class="recipes" href="">Recipes</a>
+        <a class="recipes" href="">LEAVE FRIDGE</a>
+
     </div>
 
 

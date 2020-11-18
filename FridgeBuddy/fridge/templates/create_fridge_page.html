@@ -19,6 +19,15 @@
         <a href="/log_out">LOG OUT</a>
     </div>
     <div class="container">
+
+        {% if messages %}
+            <ul>
+                {% for message in messages %} 
+                        <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
         <div class="create-fridge-form">
             <form action="/fridge/new_fridge_success" method="POST">
                 {% csrf_token %}
@@ -27,6 +36,7 @@
                 <input type="password" name="confirm_fridge_password" placeholder="Confirm Password"><br>
                 <button type="submit">CREATE FRIDGE!</button>
             </form>
+            <p><a href="/fridge/">CANCEL</a></p>
         </div>
     </div>
 </body>

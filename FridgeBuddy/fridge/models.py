@@ -27,6 +27,19 @@ class FridgeManager(models.Manager):
 
         return errors
 
+class FridgeIngredientManager(models.Manager):
+    def add_ingredient_validator(self, post_data):
+        errors = {}
+
+        # FRIDGE INGREDIENT NAME VALIDATOR
+        if len(post_data['item_name']) == 0:
+            errors['item_name'] = "Please enter an item name."
+
+        if len(post_data['quantity']) == 0:
+            errors['quantity'] = "Please enter a quantity"
+
+        return errors
+
 class Fridge(models.Model):
     name = models.CharField(max_length=255)
     password = models.CharField(max_length=255)
@@ -42,4 +55,5 @@ class FridgeIngredient(models.Model):
     fridge = models.ForeignKey(Fridge, related_name="contents", on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now=True)
+    objects = FridgeIngredientManager()
 
