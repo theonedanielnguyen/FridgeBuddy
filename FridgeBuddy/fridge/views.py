@@ -86,7 +86,6 @@ def join_fridge(request):
             logged_fridge = this_fridge[0]
 
             if bcrypt.checkpw(fridge_password.encode(), logged_fridge.password.encode()):
-                request.session['fridge_id'] = logged_fridge.id
 
                 print(f'Successful! {logged_user.first_name} {logged_user.last_name} is logged in!')
 

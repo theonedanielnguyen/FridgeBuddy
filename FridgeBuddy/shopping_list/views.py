@@ -12,6 +12,11 @@ def index(request):
     return render(request, "shopping.html", context)
 
 def add_to_list(request):
+    errors = ShoppingIngredient.objects.add_validator(request.POST)
+    if len(errors)> 0:
+        for message in errors.values():
+            messages.error(request, message)
+        return redirect('/')
     # user = User.objects.get(id=request.session['user_id'])
     ShoppingIngredient.objects.create(
         name = request.POST['ingredient'],
