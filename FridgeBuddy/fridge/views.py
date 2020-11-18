@@ -114,7 +114,8 @@ def join_fridge(request):
 
 def leave_fridge(request):
     online_user = User.objects.get(id=request.session['user_id'])
-    online_user.fridge = ''
+    online_user.fridge = None
+    online_user.save()
 
     return redirect('/fridge/')
 
