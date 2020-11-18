@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>(FRIDGE NAME) Inventory</title>
+</head>
+<body>
+    <div class="header">
+        <h1 class="logo">FRIDGEBUDDY</h1>
+        <p class="welcome">WELCOME BACK (online_user.first_name)!</p>
+        <a href="/log-out">LOG OUT</a>
+    </div>
+    <div class="content">
+        <div class="add-item">
+            <h3>ADD ITEM TO INVENTORY</h3>
+            <form action="" method="POST">
+                {% csrf_token %}
+                <label>Item Name</label><br>
+                <input type="text" name="item-name" placeholder="Item Name"><br>
+                <label>How Much</label><br>
+                <input type="number" min="0" name="quantity" placeholder="0">
+                <select name="unit">
+                    <option value="of them">of them</option>
+                    <option value="bottles">bottles</option>
+                    <option value="boxes">boxes</option>
+                    <option value="cans">cans</option>
+                    <option value="grams">grams</option>
+                    <option value="kilos">kilos</option>
+                    <option value="pounds">lbs</option>
+                    <option value="ounces">oz</option>
+                    <option value="liters">litres</option>
+                    <option value="milliliters">milliliters</option>
+                    <option value="%">%</option>
+                </select><br>
+                <button type="submit">ADD ITEM!</button>
+            </form>
+        </div>
+        <div class="inventory">
+            <table>
+                <tr>
+                    <th>ITEM NAME</th>
+                    <th>QUANTITY</th>
+                    <th>ACTION</th>
+                </tr>
+                {% for item in inventory %}
+                    <tr>
+                        <td>{{item.name}}</td>
+                        <td>{{item.quantity}} {{item.unit}}</td>
+                        <td><a href="/fridge/inventory/delete_item/{{item.id}}"></a></td>
+                    </tr>
+                {% endfor%}
+            </table>
+        </div>
+    </div>
+    
+</body>
+</html>

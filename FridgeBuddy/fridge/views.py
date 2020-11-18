@@ -1,10 +1,10 @@
 from django.shortcuts import render, HttpResponse, redirect
 from django.contrib import messages
 from login_and_rego.models import User
-from .models import Fridge
+from .models import Fridge, FridgeIngredient
 import bcrypt
 
-# Create your views here.
+# CREATE/JOIN FRIDGE STUFF
 def new_fridge_dash(request):
     if 'user_id' not in request.session:
         request.session['not_logged_in'] = "Please log in for access"
@@ -29,6 +29,10 @@ def create_fridge_page(request):
 
 def create_fridge_success(request):
     errors = Fridge.objects.create_fridge_validator(request.POST)
+
+    if Fridge.objects.filter(name=request.POST['fridge_name']):
+        messages.error(request, 'This fridge name already exists in the system!')
+        return redirect('/fridge/new')
 
     if len(errors) > 0: 
         for key, value in errors.items():
@@ -98,6 +102,32 @@ def join_fridge(request):
 
     messages.error(request, "Sorry, fridge name and password don't match.")
     return redirect('/fridge/join_fridge')
+
+# FRIDGE INVENTORY STUFF 
+
+def display_inventory(request):
+    context = {
+        "inventory": FridgeIngredient.objects.all()
+    }
+
+    return render(request, 'inventory.html', context) 
+
+def add_to_inventory(request):
+    this_fridge = Fridge.objects.get(id=request.session['fridge_id'])
+
+    new_item_name = request.POST['item_name']
+    new_item_quantity = request.POST['quantity']
+    new_item_unit = request.POST['unit']
+
+    this_item = FridgeIngredient.objects.create(name=new_item_name, quantity=float(new_item_quantity), unit=new_item_unit, fridge=this_fridge)
+
+    return redirect(f'/fridge/inventory')
+
+def remove_from_inventory(request, item_id):
+    item_to_remove = FridgeIngredient.objects.get(id=item_id)
+    item_to_remove.delete()
+
+    return redirect(f'/fridge/inventory')
 
             
 
