@@ -127,20 +127,3 @@ def remove_from_inventory(request, item_id):
     item_to_remove.delete()
 
     return redirect(f'/fridge/inventory')
-
-            
-
-
-    
-            
-
-
-
-
-
-        
-
-
-
-
-    
