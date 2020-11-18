@@ -1,4 +1,5 @@
 from django.shortcuts import render, HttpResponse, redirect
+from django.contrib import messages
 from login_and_rego.models import User
 from .models import *
 from fridge.models import Fridge
