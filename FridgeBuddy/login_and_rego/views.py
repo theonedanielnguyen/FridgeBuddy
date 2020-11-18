@@ -65,17 +65,6 @@ def login(request):
         messages.error(request, "Sorry, username and password don't match.", extra_tags="login")
         return redirect('/')
 
-def success_rego(request):
-    if 'user_id' not in request.session:
-        request.session['not_logged_in'] = "Please log in for access."
-        return redirect('/')
-
-    else:
-        context = {
-            "user": User.objects.get(id=request.session['user_id'])
-        }
-        return render(request, 'dashboard.html', context)
-
 def log_out(request):
     if 'user_id' in request.session:
         del request.session['user_id'] 
