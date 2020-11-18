@@ -2,6 +2,7 @@ from django.shortcuts import render, HttpResponse, redirect
 from django.contrib import messages
 from login_and_rego.models import User
 from .models import Fridge, FridgeIngredient
+from shopping_list.models import ShoppingList
 import bcrypt
 
 # RENDERING PAGES 
@@ -71,8 +72,11 @@ def create_fridge_success(request):
         new_fridge_user = User.objects.get(id=request.session['user_id'])
 
         password_hash = bcrypt.hashpw(new_fridge_password.encode(), bcrypt.gensalt()).decode()
-        new_fridge = Fridge.objects.create(name=new_fridge_name, password=password_hash)
+        Fridge.objects.create(name=new_fridge_name, password=password_hash)
+        new_fridge = Fridge.objects.last()
+        ShoppingList.objects.create(fridge=new_fridge)
         new_fridge_user.fridge = new_fridge
+        new_fridge_user.save()
 
     return redirect('/fridge')
 
