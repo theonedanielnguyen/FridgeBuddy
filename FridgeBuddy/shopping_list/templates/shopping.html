@@ -15,7 +15,7 @@
         <div id="shopping_list_container">
             <div class="col">
                 <h3>Add Items</h3>
-                <form action="/add_to_list">
+                <form action="/shopping_list/add_to_list">
                     <input type="text" name="ingredient" id="ingredient" placeholder="Ingredient Name">
                     <input type="number" name="quantity" id="quantity" placeholder=0>
                     <select name="unit" id="unit">
@@ -30,8 +30,10 @@
                 </form>
                 {% if messages %}
                     <div>    
-                        {% for message in messages %}    
-                            <p>{{ message }}</p>    
+                        {% for message in messages %} 
+                            {% if message.tags == "add" %}
+                                <p>{{ message }}</p>
+                            {% endif %}
                         {% endfor %}
                     </div>
                 {% endif %}
