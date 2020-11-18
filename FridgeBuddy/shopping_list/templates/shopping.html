@@ -32,11 +32,18 @@
             <div class="col">
                 <h2>Shopping List</h2>
                 <div id="shopping_list">
-                    <ul>
+                    <table>
+                        <thead>
+                            <th>Name</th>
+                            <th>Quantity</th>
+                        </thead>
+                        <tbody>
                         {% for i in shopping_list %}
-                            <li>{{i.name}} - {{i.quantity}} {{i.unit}}</li>
+                            <td>{{i.name}}</td>
+                            <td>{{i.quantity}} {{i.unit}}</td>
                         {% endfor %}
-                    </ul>
+                        </tbody>
+                    </table>
                 </div>
             </div>
             <div class="col">
