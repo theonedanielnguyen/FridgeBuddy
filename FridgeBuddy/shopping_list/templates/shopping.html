@@ -28,6 +28,13 @@
                     </select>
                     <button>Add</button>
                 </form>
+                {% if messages %}
+                    <div>    
+                        {% for message in messages %}    
+                            <p>{{ message }}</p>    
+                        {% endfor %}
+                    </div>
+                {% endif %}
             </div>
             <div class="col">
                 <h2>Shopping List</h2>
