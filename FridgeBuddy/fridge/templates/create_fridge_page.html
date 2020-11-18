@@ -4,20 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome to Fridge Buddy!</title>
+    <style>
+        * {
+            border: 1px dashed lavender;
+            margin: 0px;
+            padding: 0px;
+        }
+    </style>
 </head>
 <body>
     <div class="header">
         <h1 class="logo">FRIDGEBUDDY</h1>
-        <p class="welcome">WELCOME BACK (online_user.first_name)!</p>
+        <p class="welcome">WELCOME BACK {{online_user.first_name}}!</p>
         <a href="/log-out">LOG OUT</a>
     </div>
     <div class="container">
         <div class="create-fridge-form">
-            <form action="/new_fridge_success" method="POST">
+            <form action="/fridge/new_fridge_success" method="POST">
                 {% csrf_token %}
-                <input type="text" name="fridge_name" placeholder="Fridge Name">
-                <input type="password" name="fridge_password" placeholder="Fridge Password">
-                <input type="password" name="confirm_fridge_password" placeholder="Confirm Password">
+                <input type="text" name="fridge_name" placeholder="Fridge Name"><br>
+                <input type="password" name="fridge_password" placeholder="Fridge Password"><br>
+                <input type="password" name="confirm_fridge_password" placeholder="Confirm Password"><br>
                 <button type="submit">CREATE FRIDGE!</button>
             </form>
         </div>

@@ -8,17 +8,30 @@
 <body>
     <div class="header">
         <h1 class="logo">FRIDGEBUDDY</h1>
-        <p class="welcome">WELCOME BACK (online_user.first_name)!</p>
+        <p class="welcome">WELCOME BACK {{online_user.first_name}}!</p>
         <a href="/log-out">LOG OUT</a>
     </div>
 
     <div class="main-content">
         <h1>JOIN EXISTING FRIDGE</h1>
+
+        {% if messages %}
+            <ul>
+                {% for message in messages %} 
+                        <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
         <form action="/fridge/join_success" method="POST">
+            {% csrf_token %}
             <input type="text" name="existing_fridge_name" placeholder="Fridge Name"><br>
             <input type="password" name="existing_fridge_password" placeholder="Password"><br>
             <button type="submit">JOIN!</button>
         </form>
+
+        <p><a href="/fridge/">GO BACK</a></p>
     </div>
+    
 </body>
 </html>

@@ -4,22 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fridge Buddy Dashboard</title>
+
+    <style>
+        * {
+            border: 1px dashed lavender;
+            margin: 0px;
+            padding: 0px;
+        }
+    </style>
 </head>
 <body>
     <div class="header">
         <h1 class="logo">FRIDGEBUDDY</h1>
         <p class="welcome">WELCOME BACK {{online_user.first_name}}!</p>
         <a href="/log_out">LOG OUT</a>
-    </div>
-    <div class="container">
+    </div><br>
+
+    {% if online_user.fridge == NULL %}
+
+    <div class="content">
+        <p>Would you like to</p>
+        <a class="create" href="/fridge/new">CREATE</a><br>
+        <p>OR</p>
+        <a class="join" href="/fridge/join_fridge">JOIN</a><br>
+        <p>a fridge?</p>
+    </div><br>
+
+    {% else %}
+
+    <div class="content">
         <a href="/fridge/inventory">ENTER FRIDGE</a>
-    </div>
+    </div><br>
+
+    {% endif %}
+
     <div class="nav-links">
         <!-- Create different colours for each button -->
         <a class="shopping-list" href="">Shopping List</a>
         <a class="meal-plan" href="">Meal Plan</a>
         <a class="recipes" href="">Recipes</a>
     </div>
+
+
 
 </body>
 </html>
