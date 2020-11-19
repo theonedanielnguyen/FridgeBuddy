@@ -9,7 +9,7 @@
 <body>
     <div class="container">
         <nav class="navbar bg-primary text-light">
-            <h1>Welcome to FridgeBuddy!</h1>
+            <h1>FridgeBuddy</h1>
             <button onclick="location.href='/log_out'" type="button" class="btn btn-light shadow btn-sm">Log Off</button>
         </nav>
 
@@ -81,7 +81,7 @@
                             {% for i in shopping_list %}
                                 <tr>
                                     <td>{{i.name}}</td>
-                                    <td>{{i.quantity}} {{i.unit}}</td>
+                                    <td>{{i.quantity|floatformat:"-2"}} {{i.unit}}</td>
                                 </tr>
                             {% endfor %}
                         </tbody>

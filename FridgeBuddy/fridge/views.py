@@ -3,6 +3,7 @@ from django.contrib import messages
 from login_and_rego.models import User
 from .models import Fridge, FridgeIngredient
 from shopping_list.models import ShoppingList
+from meal_plan.models import MealPlan
 import bcrypt
 
 def has_fridge_dash(request):
@@ -63,6 +64,7 @@ def create_fridge_success(request):
         Fridge.objects.create(name=new_fridge_name, password=password_hash)
         new_fridge = Fridge.objects.last()
         ShoppingList.objects.create(fridge=new_fridge)
+        MealPlan.objects.create(fridge=new_fridge)
         new_fridge_user.fridge = new_fridge
         new_fridge_user.save()
 
