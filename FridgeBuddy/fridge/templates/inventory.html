@@ -24,8 +24,10 @@
 
             {% if messages %}
                 <ul>
-                    {% for message in messages %} 
+                    {% for message in messages %}   
+                        {% if 'add' in message.extra_tags %}
                             <li>{{ message }}</li>
+                        {% endif %}
                     {% endfor %}
                 </ul>
             {% endif %}
@@ -58,17 +60,55 @@
                 <tr>
                     <th>ITEM NAME</th>
                     <th>QUANTITY</th>
-                    <th>ACTION</th>
                 </tr>
                 {% for item in inventory %}
                     <tr>
                         <td>{{item.name}}</td>
                         <td>{{item.quantity}} {{item.unit}}</td>
-                        <td><a href="/fridge/inventory/delete_item/{{item.id}}">REMOVE</a></td>
                     </tr>
                 {% endfor%}
             </table>
         </div>
+
+        <div class="remove-item">
+            <h3>REMOVE ITEM FROM INVENTORY</h3>
+
+            {% if messages %}
+                <ul>
+                    {% for message in messages %} 
+                        {% if 'remove' in message.extra_tags %}
+                            <li>{{ message }}</li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            <form action="/fridge/inventory/remove_item" method="POST">
+                {% csrf_token %}
+                <label>Item Name</label><br>
+                <input type="text" name="item_name" placeholder="Item Name"><br>
+                <label>How Much</label><br>
+                <input type="number" min="0" step="0.01" name="quantity" placeholder="0">
+                <select name="unit">
+                    <option value="of them">of them</option>
+                    <option value="bottles">bottle(s)</option>
+                    <option value="boxes">box(es)</option>
+                    <option value="cans">can(s)</option>
+                    <option value="grams">gram(s)</option>
+                    <option value="kilos">kilo(s)</option>
+                    <option value="pounds">lbs</option>
+                    <option value="ounces">oz</option>
+                    <option value="liters">litre(s)</option>
+                    <option value="milliliters">milliliter(s)</option>
+                    <option value="pints">pint(s)</option>
+                    <option value="%">%</option>
+                </select><br>
+                <button type="submit">REMOVE!</button>
+            </form>
+        </div>
+
+
+
         <p><a href="/fridge/">GO BACK</a></p>
     </div>
     

@@ -5,18 +5,6 @@ from .models import Fridge, FridgeIngredient
 from shopping_list.models import ShoppingList
 import bcrypt
 
-# RENDERING PAGES 
-# def new_fridge_dash(request):
-#     if 'user_id' not in request.session:
-#         request.session['not_logged_in'] = "Please log in for access"
-#         return redirect('/login_page')
-
-#     context = {
-#         "online_user": User.objects.get(id=request.session['user_id'])
-#     }
-
-#     return render(request, "no_fridge_dash.html", context)
-
 def has_fridge_dash(request):
     if 'user_id' not in request.session:
         request.session['not_logged_in'] = "Please log in for access"
@@ -142,10 +130,9 @@ def add_to_inventory(request):
 
     if len(errors) > 0: 
         for key, value in errors.items():
-            messages.error(request, value)
+            messages.error(request, value, extra_tags="add")
 
         return redirect('/fridge/inventory')
-
 
     this_fridge = User.objects.get(id=request.session['user_id']).fridge
 
@@ -158,8 +145,38 @@ def add_to_inventory(request):
 
     return redirect('/fridge/inventory')
 
-def remove_from_inventory(request, item_id):
-    item_to_remove = FridgeIngredient.objects.get(id=item_id)
-    item_to_remove.delete()
+def remove_from_inventory(request):
+    errors = FridgeIngredient.objects.remove_ingredient_validator(request.POST)
+
+    if len(errors) > 0:
+        for key, value in errors.items():
+            messages.error(request, value, extra_tags="remove")
+        return redirect('/fridge/inventory')
+
+    user_online = User.objects.get(id=request.session['user_id'])
+
+    if user_online.fridge.contents.filter(name=request.POST['item_name']).exists() == False:
+        print("error1")
+        messages.error(request, "Item does not exist in fridge", extra_tags="remove")
+        return redirect('/fridge/inventory')
+
+    if int(request.POST['quantity']) > user_online.fridge.contents.get(name=request.POST['item_name']).quantity: 
+        print("error2")
+        messages.error(request, "Quantity removed may not be greater than quantity possessed", extra_tags="remove")
+        return redirect ('/fridge/inventory')
+
+    if request.POST['unit'] != user_online.fridge.contents.get(name=request.POST['item_name']).unit:
+        print("error3") 
+        messages.error(request, "Units must match the unit of the target item", extra_tags="remove")
+        return redirect('/fridge/inventory')
+
+    new_value = user_online.fridge.contents.get(name=request.POST['item_name']).quantity
+    new_value -= int(request.POST['quantity'])
+    ingredient = user_online.fridge.contents.get(name=request.POST['item_name'])
+    ingredient.quantity = new_value
+    ingredient.save()
+
+    if ingredient.quantity == 0:
+        ingredient.delete()
 
     return redirect('/fridge/inventory')
