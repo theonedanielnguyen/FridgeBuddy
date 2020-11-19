@@ -4,67 +4,88 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meal Plan</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <style>
+        body {
+            background-image: url('https://cdn.hipwallpaper.com/i/14/86/JyYN9l.jpeg');
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <nav class="navbar bg-primary text-light">
             <h1>FridgeBuddy</h1>
-            <button onclick="location.href='/log_out'" type="button" class="btn btn-light shadow btn-sm">LOG OUT</button>
+            <button onclick="location.href='/log_out'" type="button" class="btn btn-outline-light shadow btn-sm pt-0 pb-1 px-2">Log Off</button>
         </nav>
-        <div class="container">
+        <div class="container rounded-bottom pb-3" style="background-color: rgba(245, 245, 245, 0.7)">
             <div class="row text-center">
                 <div class="col">
-                    <div class="list-group list-group-horizontal">
-                        <a href="/fridge/inventory" class="list-group-item list-group-item-action">Fridge</a>
-                        <a href="/shopping_list" class="list-group-item list-group-item-action">Shopping List</a>
-                        <a href="/fridge/leave" class="list-group-item list-group-item-action">Leave Fridge</a>
+                    <div class="list-group list-group-horizontal mt-2">
+                        <a href="/fridge/inventory" class="list-group-item list-group-item-action border-secondary">Fridge</a>
+                        <a href="/shopping_list" class="list-group-item list-group-item-action border-secondary">Shopping List</a>
+                        <a href="/meal_plan" class="list-group-item list-group-item-action border-secondary">Meal Plan</a>
+                        <a href="/fridge/leave" class="list-group-item list-group-item-action border-secondary">Leave Fridge</a>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="add-meal-form">
-            <h3>ADD MEAL</h3>
-            {% if messages %}
-                <div>    
-                    {% for message in messages %}
-                        {% if 'add_meal' in message.extra_tags%}
-                            <p>{{ message }}</p>
+            <div class="container">
+                <div class="row">
+                    <div class="col"></div>
+                    <div class="col text-center border mt-2 mr-2 rounded-lg pt-2 px-4" style="background-color: rgba(245, 245, 245, 0.7)">
+                        <h3>ADD MEAL</h3>
+                        {% if messages %}
+                            <div class="container">    
+                                {% for message in messages %}
+                                    {% if 'add_meal' in message.extra_tags%}
+                                        <p>{{ message }}</p>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
                         {% endif %}
-                    {% endfor %}
+                        <form class="form text-center" action="/meal_plan/add_meal" method="POST">
+                            {% csrf_token %}
+                            <input class="form-control mb-1" type="date" name="dish_date" placeholder="DATE">
+                            <input class="form-control mb-1" type="text" name="dish_name" placeholder="Dish Name">
+                            <select class="form-control mb-1" name="dish_time" placeholder="Meal Time">
+                                <option value="" disabled selected>Meal Time</option>
+                                <option value="Breakfast">Breakfast</option>
+                                <option value="Lunch">Lunch</option>
+                                <option value="Dinner">Dinner</option>
+                            </select>
+                            <button class="btn btn-success mb-1" type="submit">ADD MEAL</button>
+                        </form>
+                    </div>
+                    <div class="col"></div>
                 </div>
-            {% endif %}
-            <form action="/meal_plan/add_meal" method="POST">
-                {% csrf_token %}
-                <input type="date" name="dish_date" placeholder="DATE"><br>
-                <input type="text" name="dish_name" placeholder="Dish Name"><br>
-                <select name="dish_time" placeholder="Meal Time">
-                    <option value="" disabled selected>Meal Time</option>
-                    <option value="Breakfast">Breakfast</option>
-                    <option value="Lunch">Lunch</option>
-                    <option value="Dinner">Dinner</option>
-                </select><br>
-                <button type="submit">ADD MEAL</button>
-            </form>
-        </div>
 
-        <div class="meal-plan-table">
-            <table>
-                <tr>
-                    <th>DATE</th>
-                    <th>MEAL TIME</th>
-                    <th>DISH</th>
-                    <th>COMPLETED?</th>
-                </tr>
-                {% for meal in meals %}
-                    <tr>
-                        <td>{{ meal.date|date:'Y-m-d' }}</td>
-                        <td>{{ meal.meal_time }}</td>
-                        <td>{{ meal.name }}</td>
-                        <td><a href="/meal_plan/remove_meal/{{meal.id}}">REMOVE</a></td>
-                    </tr>
-                {% endfor %}
-            </table>
+                <div class="row">
+                    <div class="col text-center border mt-2 rounded-lg pt-2 px-4" style="background-color: rgba(245, 245, 245, 0.7)">
+                        <table class="table">
+                            <thead class="thead-light">
+                                <th>DATE</th>
+                                <th>MEAL TIME</th>
+                                <th>DISH</th>
+                                <th>COMPLETED?</th>
+                            </thead>
+
+                            {% for meal in meals %}
+                            <tr>
+                                <td>{{meal.date|date:'l, j F Y'}}</td>
+                                <td>{{meal.meal_time}}</td>
+                                <td>{{meal.name}}</td>
+                                <td><a href="/meal_plan/remove_meal/{{meal.id}}">PREPARED!</a></td>
+
+                            </tr>
+                            {% endfor %}
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 

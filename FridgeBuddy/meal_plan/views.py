@@ -6,14 +6,22 @@ from .models import *
 
 # Create your views here.
 def meal_plan_dash(request):
+    if 'user_id' not in request.session:
+        request.session['not_logged_in'] = "Please log in for access"
+        return redirect('/')
+
     context = {
         "online_user": User.objects.get(id=request.session['user_id']),
-        "meals": User.objects.get(id=request.session['user_id']).fridge.meal_plan.meals.all()
+        "meals": User.objects.get(id=request.session['user_id']).fridge.meal_plan.meals.all().order_by('date')
     }
     
     return render(request, 'meal_plan.html', context)
 
 def add_meal(request):
+    if 'user_id' not in request.session:
+        request.session['not_logged_in'] = "Please log in for access"
+        return redirect('/')
+
     errors = Meal.objects.add_meal_validator(request.POST)
 
     if len(errors)> 0:
@@ -36,6 +44,10 @@ def add_meal(request):
     return redirect('/meal_plan')
 
 def remove_meal(request, meal_id):
+    if 'user_id' not in request.session:
+        request.session['not_logged_in'] = "Please log in for access"
+        return redirect('/')
+
     meal_to_delete = Meal.objects.get(id=meal_id)
     meal_to_delete.delete()
     return redirect('/meal_plan')
