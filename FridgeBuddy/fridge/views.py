@@ -11,6 +11,8 @@ def has_fridge_dash(request):
         request.session['not_logged_in'] = "Please log in for access"
         return redirect('/')
 
+    if User.objects.get(id=request.session['user_id']).fridge:
+        return redirect('/fridge/inventory')
     context = {
         "online_user": User.objects.get(id=request.session['user_id'])
     }
