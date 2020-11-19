@@ -77,23 +77,30 @@
                 </div>
     
                 <div class="col text-center border border-rounded" style="background-color: rgba(245, 245, 245, 0.7)">
-                    <h4>SHOPPING LIST</h4>
-                    <table class="table text-center table-bordered">
-                        <thead class="thead-info">
-                            <tr>
-                                <th class="py-1">ITEM NAME</th>
-                                <th class="py-1">QUANTITY</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for i in shopping_list %}
+
+                    <h4>IN SHOPPING LIST</h4>
+                    <form action="/shopping_list/add_to_fridge" method="POST">
+                        {% csrf_token %}
+                        <table class="table text-center table-bordered">
+                            <thead class="thead-info">
                                 <tr>
-                                    <td>{{i.name}}</td>
-                                    <td>{{i.quantity|floatformat:"-2"}} {{i.unit}}</td>
+                                    <th class="py-1">ITEM NAME</th>
+                                    <th class="py-1">QUANTITY</th>
+                                    <th class="py-1">FRIDGE</th>
                                 </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                {% for i in shopping_list %}
+                                    <tr>
+                                        <td>{{i.name}}</td>
+                                        <td>{{i.quantity|floatformat:"-2"}} {{i.unit}}</td>
+                                        <td><input type="checkbox" name="add_to_fridge" id="{{i.id}}" value={{i.id}}></td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        <button class="float-right btn-sm btn-success">Add to fridge</button>
+                    </form>
                 </div>
     
                 <div class="col text-center">
