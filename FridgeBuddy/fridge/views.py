@@ -145,7 +145,7 @@ def add_to_inventory(request):
             messages.error(request, "Units must match the unit of the target item", extra_tags="add")
             return redirect('/fridge/inventory')
         new_value = this_fridge.contents.get(name=request.POST['item_name']).quantity
-        new_value += int(request.POST['quantity'])
+        new_value += float(request.POST['quantity'])
         ingredient = this_fridge.contents.get(name=request.POST['item_name'])
         ingredient.quantity = new_value
         ingredient.save()

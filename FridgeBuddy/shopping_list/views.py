@@ -2,7 +2,7 @@ from django.shortcuts import render, HttpResponse, redirect
 from django.contrib import messages
 from login_and_rego.models import User
 from .models import *
-from fridge.models import Fridge
+from fridge.models import Fridge, FridgeIngredient
 
 # Create your views here.
 def index(request):
@@ -75,3 +75,33 @@ def remove_from_list(request):
         ingredient.delete()
 
     return redirect('/shopping_list')
+
+"""
+-----------------Testing Site----------------
+"""
+def add_to_fridge(request):
+    item_list = request.POST.getlist("add_to_fridge")
+    fridge = User.objects.get(id=request.session['user_id']).fridge
+
+    if item_list == []:
+        return redirect('/shopping_list')
+    
+    else:
+        for num in item_list:
+            item = ShoppingIngredient.objects.get(id=num)
+            if fridge.contents.filter(name=item.name).exists():
+                new_value = fridge.contents.get(name=item.name).quantity
+                new_value += float(item.quantity)
+                ingredient = fridge.contents.get(name=item.name)
+                ingredient.quantity = new_value
+                ingredient.save()
+            else:
+                FridgeIngredient.objects.create(
+                    name=item.name,
+                    quantity=float(item.quantity),
+                    unit=item.unit,
+                    fridge=fridge,
+                )
+            item.delete()
+
+        return redirect('/fridge')
