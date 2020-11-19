@@ -9,8 +9,8 @@
 <body>
     <div class="container">
         <nav class="navbar bg-primary text-light">
-            <h1>Welcome to FridgeBuddy!</h1>
-            <button onclick="location.href='/log_out'" type="button" class="btn btn-light shadow btn-sm">Log Off</button>
+            <h1>FridgeBuddy</h1>
+            <button onclick="location.href='/log_out'" type="button" class="btn btn-light shadow btn-sm">LOG OUT</button>
         </nav>
 
         <div class="container">
@@ -52,7 +52,7 @@
                                     <option value="%">%</option>
                                 </select>
                             </div>
-                            <button type="submit" class="btn btn-success shadow mt-2">ADD ITEM!</button>
+                            <button type="submit" class="btn btn-success shadow mt-2">ADD ITEM</button>
                         </form>
                         {% if messages %}
                             <ul class="mt-2 mb-1">
@@ -66,7 +66,7 @@
                     </div>
                 </div>
                 <div class="col text-center border">
-                    <h4>IN FRIDGE</h4>
+                    <h4>FRIDGE INVENTORY</h4>
                     <table class="table text-center table-bordered">
                         <thead class="thead-info">
                             <tr>
@@ -78,7 +78,7 @@
                         {% for item in inventory %}
                             <tr>
                                 <td class="py-1">{{item.name}}</td>
-                                <td class="py-1">{{item.quantity}} {{item.unit}}</td>
+                                <td class="py-1">{{item.quantity|floatformat:"-2"}} {{item.unit}}</td>
                             </tr>
                         {% endfor%}
                         </tbody>
@@ -107,7 +107,7 @@
                                     <option value="%">%</option>
                                 </select>
                             </div>
-                            <button type="submit" class="btn btn-danger shadow mt-2">REMOVE ITEM!</button>
+                            <button type="submit" class="btn btn-danger shadow mt-2">REMOVE ITEM</button>
                         </form>
                         {% if messages %}
                             <ul class="mt-2 mb-1">
