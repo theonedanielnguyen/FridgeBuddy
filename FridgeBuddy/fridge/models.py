@@ -36,7 +36,18 @@ class FridgeIngredientManager(models.Manager):
             errors['item_name'] = "Please enter an item name."
 
         if len(post_data['quantity']) == 0:
-            errors['quantity'] = "Please enter a quantity"
+            errors['quantity'] = "Please enter a quantity."
+
+        return errors
+
+    def remove_ingredient_validator(self, post_data):
+        errors = {}
+
+        if len(post_data['item_name']) == 0:
+            errors['item_name'] = "Please enter an item name."
+
+        if len(post_data['quantity']) == 0:
+            errors['quantity'] = "Please enter a quantity."
 
         return errors
 
@@ -46,7 +57,6 @@ class Fridge(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now=True)
     objects = FridgeManager()
-
 
 class FridgeIngredient(models.Model):
     name = models.CharField(max_length=255)

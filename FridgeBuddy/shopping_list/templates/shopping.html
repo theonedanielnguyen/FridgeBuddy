@@ -19,7 +19,7 @@
                 <form action="/shopping_list/add_to_list" method="POST">
                     {% csrf_token %}
                     <input type="text" name="ingredient" id="ingredient" placeholder="Ingredient Name">
-                    <input type="number" name="quantity" id="quantity" placeholder=0 value=0>
+                    <input type="number" min="0" step="0.01" name="quantity" id="quantity" placeholder=0 value=0>
                     <select name="unit" id="unit">
                         <option value="of them">of them</option>
                         <option value="bottles">bottle(s)</option>
