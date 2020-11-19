@@ -1,7 +1,6 @@
 from django.db import models
 from fridge.models import Fridge
 
-
 # Create your models here.
 class ShoppingIngredientManager(models.Manager):
     def add_validator(self, postData):
