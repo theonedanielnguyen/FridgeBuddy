@@ -73,7 +73,7 @@
 
                             {% for meal in meals %}
                             <tr>
-                                <td>{{meal.date|date:'Y-m-d'}}</td>
+                                <td>{{meal.date|date:'l, j F Y'}}</td>
                                 <td>{{meal.meal_time}}</td>
                                 <td>{{meal.name}}</td>
                                 <td><a href="/meal_plan/remove_meal/{{meal.id}}">PREPARED!</a></td>
