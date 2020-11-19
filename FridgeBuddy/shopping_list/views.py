@@ -22,8 +22,11 @@ def add_to_list(request):
 
     user = User.objects.get(id=request.session['user_id'])
     if user.fridge.shopping_list.contents.filter(name=request.POST['ingredient']).exists():
+        if request.POST['unit'] != user.fridge.shopping_list.contents.get(name=request.POST['ingredient']).unit:
+            messages.error(request, "Units must match the unit of the target item", extra_tags="add")
+            return redirect('/fridge/inventory')
         new_value = user.fridge.shopping_list.contents.get(name=request.POST['ingredient']).quantity
-        new_value += int(request.POST['quantity'])
+        new_value += float(request.POST['quantity'])
         ingredient = user.fridge.shopping_list.contents.get(name=request.POST['ingredient'])
         ingredient.quantity = new_value
         ingredient.save()
@@ -31,7 +34,7 @@ def add_to_list(request):
     else:
         ShoppingIngredient.objects.create(
             name = request.POST['ingredient'],
-            quantity = request.POST['quantity'],
+            quantity = float(request.POST['quantity']),
             unit = request.POST['unit'],
             shopping_list = user.fridge.shopping_list,
         )
@@ -52,7 +55,7 @@ def remove_from_list(request):
         messages.error(request, "Item does not exist in shopping list", extra_tags="remove")
         return redirect('/shopping_list')
 
-    if int(request.POST['quantity']) > user.fridge.shopping_list.contents.get(name=request.POST['ingredient']).quantity:
+    if float(request.POST['quantity']) > user.fridge.shopping_list.contents.get(name=request.POST['ingredient']).quantity:
         print("error2")
         messages.error(request,"Quantity removed may not be greater than quantity possessed", extra_tags="remove")
         return redirect('/shopping_list')
@@ -63,7 +66,7 @@ def remove_from_list(request):
         return redirect('/shopping_list')
 
     new_value = user.fridge.shopping_list.contents.get(name=request.POST['ingredient']).quantity
-    new_value -= int(request.POST['quantity'])
+    new_value -= float(request.POST['quantity'])
     ingredient = user.fridge.shopping_list.contents.get(name=request.POST['ingredient'])
     ingredient.quantity = new_value
     ingredient.save()
