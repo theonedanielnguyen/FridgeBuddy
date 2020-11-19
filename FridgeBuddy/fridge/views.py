@@ -135,13 +135,19 @@ def add_to_inventory(request):
         return redirect('/fridge/inventory')
 
     this_fridge = User.objects.get(id=request.session['user_id']).fridge
+    if this_fridge.contents.filter(name=request.POST['item_name']).exists():
+        new_value = this_fridge.contents.get(name=request.POST['item_name']).quantity
+        new_value += int(request.POST['quantity'])
+        ingredient = this_fridge.contents.get(name=request.POST['item_name'])
+        ingredient.quantity = new_value
+        ingredient.save()
 
-    new_item_name = request.POST['item_name']
-    new_item_quantity = request.POST['quantity']
-    new_item_unit = request.POST['unit']
+    else:
+        new_item_name = request.POST['item_name']
+        new_item_quantity = request.POST['quantity']
+        new_item_unit = request.POST['unit']
 
-    this_item = FridgeIngredient.objects.create(name=new_item_name, quantity=float(new_item_quantity), unit=new_item_unit, fridge=this_fridge)
-    this_item.fridge = this_fridge
+        this_item = FridgeIngredient.objects.create(name=new_item_name, quantity=float(new_item_quantity), unit=new_item_unit, fridge=this_fridge)
 
     return redirect('/fridge/inventory')
 
