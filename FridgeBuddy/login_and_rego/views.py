@@ -47,7 +47,7 @@ def login(request):
         for key, value in login_errors.items():
             messages.error(request, value, extra_tags="login")
 
-        return redirect('/')
+        return redirect('/login_page')
 
     else: 
         user = User.objects.filter(email=request.POST['login-email'])
@@ -63,22 +63,14 @@ def login(request):
 
         
         messages.error(request, "Sorry, username and password don't match.", extra_tags="login")
-        return redirect('/')
+        return redirect('/login_page')
 
 def log_out(request):
     if 'user_id' in request.session:
         del request.session['user_id'] 
 
-    return redirect('/')
+    return redirect('/login_page')
 
 
-def show_user_page(request, user_id): 
-    target_user = User.objects.get(id=user_id)
-    reviews = Review.objects.filter(reviewer=target_user)
-
-    context = {
-        'target_user': User.objects.get(id=user_id),
-        'reviews': Review.objects.filter(reviewer=target_user)
-    }
-
-    return render(request, 'userpage.html', context)
+def welcome(request):
+    return render(request, 'welcome.html')
