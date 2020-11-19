@@ -28,7 +28,7 @@
             {% endif %}
             <div class="row">
                 <div class="col">
-                    <h2 class="ml-5">WELCOME BACK {{online_user.first_name}}!</h2>
+                    <h2 class="ml-4">WELCOME BACK {{online_user.first_name|upper}}!</h2>
                 </div>
             </div>
             {% if online_user.fridge == NULL or online_user.fridge == '' %}
