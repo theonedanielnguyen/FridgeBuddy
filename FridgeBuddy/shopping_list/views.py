@@ -6,6 +6,10 @@ from fridge.models import Fridge, FridgeIngredient
 
 # Create your views here.
 def index(request):
+    if 'user_id' not in request.session:
+        request.session['not_logged_in'] = "Please log in for access"
+        return redirect('/login_page')
+
     context = {
         "user" : User.objects.get(id=request.session['user_id']),
         "shopping_list" : User.objects.get(id=request.session['user_id']).fridge.shopping_list.contents.all()
@@ -13,6 +17,10 @@ def index(request):
     return render(request, "shopping.html", context)
 
 def add_to_list(request):
+    if 'user_id' not in request.session:
+        request.session['not_logged_in'] = "Please log in for access"
+        return redirect('/login_page')
+
     errors = ShoppingIngredient.objects.add_validator(request.POST)
 
     if len(errors)> 0:
@@ -42,6 +50,10 @@ def add_to_list(request):
     return redirect('/shopping_list')
 
 def remove_from_list(request):
+    if 'user_id' not in request.session:
+        request.session['not_logged_in'] = "Please log in for access"
+        return redirect('/login_page')
+
     errors = ShoppingIngredient.objects.remove_validator(request.POST)
 
     if len(errors)> 0:

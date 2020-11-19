@@ -6,17 +6,28 @@
     <title>Meal Plan</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <style>
+        * {
+            font-family: 'Rubik', sans-serif;
+        }
+
         body {
             background-image: url('https://cdn.hipwallpaper.com/i/14/86/JyYN9l.jpeg');
             background-repeat: no-repeat;
             background-size: cover;
         }
+
+    
     </style>
+
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,400;0,500;0,700;1,700&display=swap" rel="stylesheet">
+
+     
 </head>
 <body>
     <div class="container">
-        <nav class="navbar bg-primary text-light">
-            <h1>FridgeBuddy</h1>
+        <nav class="navbar bg-info text-light">
+            <h1><em>FridgeBuddy</em></h1>
             <button onclick="location.href='/log_out'" type="button" class="btn btn-outline-light shadow btn-sm pt-0 pb-1 px-2">Log Off</button>
         </nav>
         <div class="container rounded-bottom pb-3" style="background-color: rgba(245, 245, 245, 0.7)">
@@ -55,7 +66,7 @@
                                 <option value="Lunch">Lunch</option>
                                 <option value="Dinner">Dinner</option>
                             </select>
-                            <button class="btn btn-success mb-1" type="submit">ADD MEAL</button>
+                            <button class="btn btn-info mb-1" type="submit">ADD MEAL</button>
                         </form>
                     </div>
                     <div class="col"></div>
