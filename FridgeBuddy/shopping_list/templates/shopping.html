@@ -26,6 +26,7 @@
                     <div class="list-group list-group-horizontal">
                         <a href="/fridge/inventory" class="list-group-item list-group-item-action border-secondary">Fridge</a>
                         <a href="/shopping_list" class="list-group-item list-group-item-action border-secondary">Shopping List</a>
+                        <a href="/meal_plan" class="list-group-item list-group-item-action border-secondary">Meal Plan</a>
                         <a href="/fridge/leave" class="list-group-item list-group-item-action border-secondary">Leave Fridge</a>
                     </div>
                 </div>
@@ -61,16 +62,16 @@
                                     <option value="%">%</option>
                                 </select>
                             </div>
-                            <button class="btn btn-success shadow mt-2">ADD ITEM!</button>
+                            <button class="btn btn-success shadow mt-2">ADD ITEM</button>
                         </form>
                         {% if messages %}
-                            <div>    
+                            <ul class="mt-2 mb-1">  
                                 {% for message in messages %}
                                     {% if 'add' in message.extra_tags%}
-                                        <p>{{ message }}</p>
+                                        <li>{{ message }}</li>
                                     {% endif %}
                                 {% endfor %}
-                            </div>
+                            </ul>
                         {% endif %}
                     </div>
                 </div>
@@ -88,7 +89,7 @@
                             {% for i in shopping_list %}
                                 <tr>
                                     <td>{{i.name}}</td>
-                                    <td>{{i.quantity}} {{i.unit}}</td>
+                                    <td>{{i.quantity|floatformat:"-2"}} {{i.unit}}</td>
                                 </tr>
                             {% endfor %}
                         </tbody>
@@ -102,7 +103,7 @@
                             {% csrf_token %}
                             <input type="text" name="ingredient" id="ingredient" placeholder="Item Name" class="form-control">
                             <div class="form-row px-1">
-                                <input type="number" name="quantity" id="quantity" placeholder=0 value=0 class="form-control col">
+                                <input type="number" name="quantity" id="quantity" placeholder=0 value=0 step=".01" class="form-control col">
                                 <select name="unit" id="unit" class="form-control col">
                                     <option value="of them">of them</option>
                                     <option value="bottles">bottle(s)</option>
@@ -119,16 +120,16 @@
                                 </select>
                             </div>
                             
-                            <button class="btn btn-danger shadow mt-2">REMOVE ITEM!</button>
+                            <button class="btn btn-danger shadow mt-2">REMOVE ITEM</button>
                         </form>
                         {% if messages %}
-                            <div>    
+                            <ul class="mt-2 mb-1">   
                                 {% for message in messages %}
                                     {% if 'remove' in message.extra_tags%}
-                                        <p>{{ message }}</p>
+                                        <ul>{{ message }}</ul>
                                     {% endif %}
                                 {% endfor %}
-                            </div>
+                            </ul>
                         {% endif %}
                     </div>
                 </div>
