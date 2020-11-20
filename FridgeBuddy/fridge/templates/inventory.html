@@ -7,34 +7,48 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <style>
+        * {
+            font-family: 'Rubik', sans-serif;
+        }
+
         body {
             background-image: url('https://cdn.hipwallpaper.com/i/14/86/JyYN9l.jpeg');
             background-repeat: no-repeat;
             background-size: cover;
         }
+
+        .list-group-item.active {
+            z-index:2;
+            color:#ffffff;
+            background-color:#6d7981;
+        }
+        
     </style>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,400;0,500;0,700;1,700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
-        <nav class="navbar bg-primary text-light rounded-bottom">
+
+        <nav class="navbar bg-info text-light rounded-bottom">
             <h1><strong><em>FridgeBuddy</em></strong></h1>
-            <button onclick="location.href='/log_out'" type="button" class="btn btn-outline-light shadow btn-sm pt-0 pb-1 px-2">Log Off</button>
+            <button onclick="location.href='/log_out'" type="button" class="btn btn-outline-light shadow btn-md pt-0 pb-1 px-2">LOG OFF</button>
         </nav>
 
         <div class="container rounded-bottom pb-3" style="background-color: rgba(245, 245, 245, 0.7)">
             <div class="row text-center">
                 <div class="col">
                     <div class="list-group list-group-horizontal mt-2">
-                        <a href="/fridge/inventory" class="list-group-item list-group-item-action border-secondary">Fridge</a>
+                        <a href="/fridge/inventory" class="list-group-item list-group-item-action border-secondary active disabled">FRIDGE</a>
                         <a href="/shopping_list" class="list-group-item list-group-item-action border-secondary">Shopping List</a>
                         <a href="/meal_plan" class="list-group-item list-group-item-action border-secondary">Meal Plan</a>
-                        <a href="/fridge/leave" class="list-group-item list-group-item-action border-secondary">Leave Fridge</a>
+                        <!-- <a href="/fridge/leave" class="list-group-item list-group-item-action border-secondary">Leave Fridge</a> -->
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col">
-                    <h2 class="ml-4">WELCOME BACK {{online_user.first_name|upper}}!</h2>
+                    <h2 class="mx-2 my-2 text-center"> {{fridge.name|upper}} INVENTORY</h2>
                 </div>
             </div>
             <div class="row">
@@ -43,10 +57,10 @@
                         <h5>ADD ITEM</h5>
                         <form action="/fridge/inventory/add_item" method="POST">
                             {% csrf_token %}
-                            <input type="text" name="item_name" placeholder="Item Name" class="form-control">
+                            <input type="text" name="item_name" placeholder="Item Name" class="form-control mx-1 my-1">
                             <div class="form-row px-1">
-                            <input type="number" min="0" step="0.01" name="quantity" placeholder="0" class="form-control col">
-                                <select name="unit" class="form-control col">
+                            <input type="number" min="0" step="0.01" name="quantity" placeholder="0" class="form-control col mx-1 my-1">
+                                <select name="unit" class="form-control col mx-1 my-1">
                                     <option value="of them">of them</option>
                                     <option value="bottles">bottle(s)</option>
                                     <option value="boxes">box(es)</option>
@@ -61,7 +75,7 @@
                                     <option value="%">%</option>
                                 </select>
                             </div>
-                            <button type="submit" class="btn btn-success shadow mt-2">ADD ITEM</button>
+                            <button type="submit" class="btn btn-success shadow mx-1 my-1">ADD ITEM</button>
                         </form>
                         {% if messages %}
                             <ul class="mt-2 mb-1">
@@ -75,7 +89,7 @@
                     </div>
                 </div>
                 <div class="col text-center border rounded" style="background-color: rgba(245, 245, 245, 0.7)">
-                    <h4>FRIDGE INVENTORY</h4>
+                    <h4 class="mx-2 my-2">FRIDGE</h4>
                     <table class="table text-center table-bordered">
                         <thead class="thead-info">
                             <tr>
@@ -102,10 +116,10 @@
                         <h5>REMOVE ITEM</h5>
                         <form action="/fridge/inventory/remove_item" method="POST">
                             {% csrf_token %}
-                            <input type="text" name="item_name" placeholder="Item Name" class="form-control">
+                            <input type="text" name="item_name" placeholder="Item Name" class="form-control mx-1 my-1">
                             <div class="form-row px-1">
-                                <input type="number" min="0" step="0.01" name="quantity" placeholder="0" class="form-control col">
-                                <select name="unit" class="form-control col">
+                                <input type="number" min="0" step="0.01" name="quantity" placeholder="0" class="form-control col mx-1 my-1">
+                                <select name="unit" class="form-control col mx-1 my-1">
                                     <option value="of them">of them</option>
                                     <option value="bottles">bottle(s)</option>
                                     <option value="boxes">box(es)</option>
@@ -120,7 +134,7 @@
                                     <option value="%">%</option>
                                 </select>
                             </div>
-                            <button type="submit" class="btn btn-danger shadow mt-2">REMOVE ITEM</button>
+                            <button type="submit" class="btn btn-danger shadow mx-1 my-1">REMOVE ITEM</button>
                         </form>
                         {% if messages %}
                             <ul class="mt-2 mb-1">
@@ -134,6 +148,11 @@
                     </div>
                 </div>
             </div>
+
+            <div class="row d-flex justify-content-center">
+                <button onclick="location.href='/leave'" class="btn btn-outline-danger shadow mt-2">LEAVE FRIDGE</button>
+            </div>  
+
             <!-- <div class="row">
                 <div class="col">
                     <h4>Members:</h4>

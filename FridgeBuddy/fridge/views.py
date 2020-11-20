@@ -45,6 +45,10 @@ def join_fridge_page(request):
 # CREATING FRIDGE
 
 def create_fridge_success(request):
+    if 'user_id' not in request.session:
+        request.session['not_logged_in'] = "Please log in for access"
+        return redirect('/login_page')
+
     errors = Fridge.objects.create_fridge_validator(request.POST)
 
     if Fridge.objects.filter(name=request.POST['fridge_name']):
@@ -76,6 +80,10 @@ def create_fridge_success(request):
 # JOINING FRIDGE
 
 def join_fridge(request): 
+    if 'user_id' not in request.session:
+        request.session['not_logged_in'] = "Please log in for access"
+        return redirect('/login_page')
+
     errors = Fridge.objects.join_fridge_validator(request.POST)
 
     if len(errors) > 0: 
@@ -105,6 +113,10 @@ def join_fridge(request):
 
 
 def leave_fridge(request):
+    if 'user_id' not in request.session:
+        request.session['not_logged_in'] = "Please log in for access"
+        return redirect('/login_page')
+        
     online_user = User.objects.get(id=request.session['user_id'])
     online_user.fridge = None
     online_user.save()
@@ -114,9 +126,9 @@ def leave_fridge(request):
 # FRIDGE INVENTORY STUFF 
 
 def display_inventory(request):
-    if 'not_logged_in' in request.session:
-        messages.error(request, request.session['not_logged_in'], extra_tags="login")
-        del request.session['not_logged_in'] 
+    if 'user_id' not in request.session:
+        request.session['not_logged_in'] = "Please log in for access"
+        return redirect('/login_page') 
 
     this_fridge = User.objects.get(id=request.session['user_id']).fridge
 
@@ -130,6 +142,10 @@ def display_inventory(request):
     return render(request, 'inventory.html', context) 
 
 def add_to_inventory(request):
+    if 'user_id' not in request.session:
+        request.session['not_logged_in'] = "Please log in for access"
+        return redirect('/login_page')
+
     errors = FridgeIngredient.objects.add_ingredient_validator(request.POST)
 
     if len(errors) > 0: 
@@ -160,6 +176,10 @@ def add_to_inventory(request):
     return redirect('/fridge/inventory')
 
 def remove_from_inventory(request):
+    if 'user_id' not in request.session:
+        request.session['not_logged_in'] = "Please log in for access"
+        return redirect('/login_page')
+
     errors = FridgeIngredient.objects.remove_ingredient_validator(request.POST)
 
     if len(errors) > 0:
