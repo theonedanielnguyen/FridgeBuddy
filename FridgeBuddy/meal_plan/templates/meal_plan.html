@@ -59,10 +59,10 @@
                     <div class="col text-center border mt-2 mr-2 rounded-lg pt-2 px-4" style="background-color: rgba(245, 245, 245, 0.7)">
                         <h3>ADD MEAL</h3>
                         {% if messages %}
-                            <div class="container">    
+                            <div class="container mb-2">    
                                 {% for message in messages %}
                                     {% if 'add_meal' in message.extra_tags%}
-                                        <p>{{ message }}</p>
+                                        <li class="text-danger">{{ message }}</li>
                                     {% endif %}
                                 {% endfor %}
                             </div>
@@ -71,11 +71,11 @@
                             {% csrf_token %}
                             <input class="form-control mb-1" type="date" name="dish_date" placeholder="DATE">
                             <input class="form-control mb-1" type="text" name="dish_name" placeholder="Dish Name">
-                            <select class="form-control mb-1" name="dish_time" placeholder="Meal Time">
-                                <option value="" disabled selected>Meal Time</option>
-                                <option value="Breakfast">Breakfast</option>
-                                <option value="Lunch">Lunch</option>
-                                <option value="Dinner">Dinner</option>
+                            <select class="form-control mb-1" name="dish_time">
+                                <option value="">Meal Time</option>
+                                <option value="breakfast">Breakfast</option>
+                                <option value="lunch">Lunch</option>
+                                <option value="dinner">Dinner</option>
                             </select>
                             <button class="btn btn-info my-2" type="submit">ADD MEAL</button>
                         </form>

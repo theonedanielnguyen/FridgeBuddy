@@ -35,7 +35,7 @@
                             <ul>
                                 {% for message in messages %} 
                                     {% if 'registration' in message.extra_tags %}
-                                        <li>{{ message }}</li>
+                                        <li class="text-danger">{{ message }}</li>
                                     {% endif %}
                                 {% endfor %}
                             </ul>
@@ -51,7 +51,7 @@
 
                         <button class="btn btn-info mt-2" type="submit">REGISTER</button>
                     </form>
-                    <p class="my-3">Already have an account? Log in <a href="/login_page">Here</a>!</p>
+                    <p class="my-3">Already have an account? Log in <a href="/login_page">here</a>!</p>
                 </div>
                 <div class="col"></div>
             </div>
