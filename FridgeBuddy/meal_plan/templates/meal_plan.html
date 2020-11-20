@@ -49,7 +49,7 @@
 
             <div class="row">
                 <div class="col">
-                    <h2 class="mx-2 my-2 text-center">{{fridge.name|upper}} SHOPPING LIST</h2>
+                    <h2 class="mx-2 my-2 text-center">{{fridge.name|upper}} MEAL PLAN</h2>
                 </div>
             </div>
 
@@ -71,6 +71,7 @@
                             {% csrf_token %}
                             <input class="form-control mb-1" type="date" name="dish_date" placeholder="DATE">
                             <input class="form-control mb-1" type="text" name="dish_name" placeholder="Dish Name">
+
                             <select class="form-control mb-1" name="dish_time">
                                 <option value="">Meal Time</option>
                                 <option value="breakfast">Breakfast</option>
