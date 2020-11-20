@@ -10,10 +10,18 @@ def index(request):
         request.session['not_logged_in'] = "Please log in for access"
         return redirect('/login_page')
 
+    quantities = {}
+    units = {}
+    for i in User.objects.get(id=request.session['user_id']).fridge.shopping_list.contents.all():
+        quantities[i.name] = i.quantity
+        units[i.name] = i.unit
+
     context = {
         "user" : User.objects.get(id=request.session['user_id']),
         "fridge": User.objects.get(id=request.session['user_id']).fridge,
-        "shopping_list" : User.objects.get(id=request.session['user_id']).fridge.shopping_list.contents.all()
+        "shopping_list" : User.objects.get(id=request.session['user_id']).fridge.shopping_list.contents.all(),
+        "quantities": quantities,
+        "units": units,
     }
     return render(request, "shopping.html", context)
 

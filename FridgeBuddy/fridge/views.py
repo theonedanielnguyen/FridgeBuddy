@@ -132,11 +132,20 @@ def display_inventory(request):
 
     this_fridge = User.objects.get(id=request.session['user_id']).fridge
 
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~ #
+    quantities = {}
+    units = {}
+    for i in this_fridge.contents.all():
+        quantities[i.name] = i.quantity
+        units[i.name] = i.unit
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~ #
     context = {
         "online_user": User.objects.get(id=request.session['user_id']),
         "fridge": User.objects.get(id=request.session['user_id']).fridge,
         "inventory": this_fridge.contents.all(),
-        "members": this_fridge.members.all()
+        "members": this_fridge.members.all(),
+        "quantities": quantities,
+        "units": units,
     }
 
     return render(request, 'inventory.html', context) 

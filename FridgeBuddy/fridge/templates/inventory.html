@@ -116,15 +116,16 @@
                         <h5>REMOVE ITEM</h5>
                         <form action="/fridge/inventory/remove_item" method="POST">
                             {% csrf_token %}
-                            <select name="item_name" id="item_name" class="form-control" {% if not inventory %}disabled{% endif %}>
+                            <select name="item_name" id="remove-item" class="form-control" {% if not inventory %}disabled{% endif %}>
+                                <option value=""></option>
                                 {% for i in inventory %}
                                     <option value="{{i.name}}">{{i.name}}</option>
                                 {% endfor %}
                             </select>
                             <!-- <input type="text" name="item_name" placeholder="Item Name" class="form-control mx-1 my-1"> -->
                             <div class="form-row px-1">
-                                <input type="number" min="0" step="0.01" name="quantity" placeholder="0" class="form-control col mx-1 my-1" {% if not inventory %}disabled{% endif %}>
-                                <select name="unit" class="form-control col mx-1 my-1" {% if not inventory %}disabled{% endif %}>
+                                <input type="number" min="0" step="0.01" name="quantity" id="remove-quantity" placeholder="0" class="form-control col mx-1 my-1" {% if not inventory %}disabled{% endif %}>
+                                <select name="unit" id="remove-unit" class="form-control col mx-1 my-1" {% if not inventory %}disabled{% endif %}>
                                     <option value="count">count</option>
                                     <option value="bottles">bottle(s)</option>
                                     <option value="boxes">box(es)</option>
@@ -224,6 +225,13 @@
         modal.find('.modal-body select').val(unit)
         modal.find('.modal-body input[name="item_name"]').val(name)
         })
+    var quantities = {{quantities|safe}}
+    var units = {{units|safe}}
+    $("#remove-item").on("change", function(){
+        value = $(this).val()
+        $('#remove-quantity').val(quantities[value])
+        $('#remove-unit').val(units[value])
+    })
 </script>
 </body>
 </html>
