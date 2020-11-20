@@ -16,7 +16,12 @@
             background-size: cover;
         }
 
-    
+        .list-group-item.active {
+            z-index:2;
+            color:#ffffff;
+            background-color:#657d8f;
+            border-color:#657d8f;
+        }
     </style>
 
 <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -28,7 +33,7 @@
     <div class="container">
         <nav class="navbar bg-info text-light">
             <h1><em>FridgeBuddy</em></h1>
-            <button onclick="location.href='/log_out'" type="button" class="btn btn-outline-light shadow btn-sm pt-0 pb-1 px-2">Log Off</button>
+            <button onclick="location.href='/log_out'" type="button" class="btn btn-outline-light shadow btn-md pt-0 pb-1 px-2">LOG OFF</button>
         </nav>
         <div class="container rounded-bottom pb-3" style="background-color: rgba(245, 245, 245, 0.7)">
             <div class="row text-center">
@@ -36,8 +41,8 @@
                     <div class="list-group list-group-horizontal mt-2">
                         <a href="/fridge/inventory" class="list-group-item list-group-item-action border-secondary">Fridge</a>
                         <a href="/shopping_list" class="list-group-item list-group-item-action border-secondary">Shopping List</a>
-                        <a href="/meal_plan" class="list-group-item list-group-item-action border-secondary">Meal Plan</a>
-                        <a href="/fridge/leave" class="list-group-item list-group-item-action border-secondary">Leave Fridge</a>
+                        <a href="/meal_plan" class="list-group-item list-group-item-action border-secondary active disabled">MEAL PLAN</a>
+                        <!-- <a href="/fridge/leave" class="list-group-item list-group-item-action border-secondary">Leave Fridge</a> -->
                     </div>
                 </div>
             </div>

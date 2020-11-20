@@ -12,6 +12,7 @@ def index(request):
 
     context = {
         "user" : User.objects.get(id=request.session['user_id']),
+        "fridge": User.objects.get(id=request.session['user_id']).fridge,
         "shopping_list" : User.objects.get(id=request.session['user_id']).fridge.shopping_list.contents.all()
     }
     return render(request, "shopping.html", context)
