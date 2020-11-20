@@ -15,6 +15,13 @@
             background-repeat: no-repeat;
             background-size: cover;
         }
+
+        .list-group-item.active {
+            z-index:2;
+            color:#ffffff;
+            background-color:#6d7981;
+        }
+        
     </style>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,400;0,500;0,700;1,700&display=swap" rel="stylesheet">
@@ -23,23 +30,23 @@
     <div class="container">
         <nav class="navbar bg-info text-light rounded-bottom">
             <h1><strong><em>FridgeBuddy</em></strong></h1>
-            <button onclick="location.href='/log_out'" type="button" class="btn btn-outline-light shadow btn-sm pt-0 pb-1 px-2">Log Off</button>
+            <button onclick="location.href='/log_out'" type="button" class="btn btn-outline-light shadow btn-md pt-0 pb-1 px-2">LOG OFF</button>
         </nav>
 
         <div class="container rounded-bottom pb-3" style="background-color: rgba(245, 245, 245, 0.7)">
             <div class="row text-center">
                 <div class="col">
                     <div class="list-group list-group-horizontal mt-2">
-                        <a href="/fridge/inventory" class="list-group-item list-group-item-action border-secondary">Fridge</a>
+                        <a href="/fridge/inventory" class="list-group-item list-group-item-action border-secondary active disabled">FRIDGE</a>
                         <a href="/shopping_list" class="list-group-item list-group-item-action border-secondary">Shopping List</a>
                         <a href="/meal_plan" class="list-group-item list-group-item-action border-secondary">Meal Plan</a>
-                        <a href="/fridge/leave" class="list-group-item list-group-item-action border-secondary">Leave Fridge</a>
+                        <!-- <a href="/fridge/leave" class="list-group-item list-group-item-action border-secondary">Leave Fridge</a> -->
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col">
-                    <h2 class="mx-2 my-2 text-center">WELCOME BACK {{online_user.first_name|upper}}!</h2>
+                    <h2 class="mx-2 my-2 text-center"> {{fridge.name|upper}} INVENTORY</h2>
                 </div>
             </div>
             <div class="row">
@@ -135,6 +142,11 @@
                     </div>
                 </div>
             </div>
+
+            <div class="row d-flex justify-content-center">
+                <button onclick="location.href='/leave'" class="btn btn-outline-danger shadow mt-2">LEAVE FRIDGE</button>
+            </div>  
+
             <!-- <div class="row">
                 <div class="col">
                     <h4>Members:</h4>
