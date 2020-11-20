@@ -23,3 +23,5 @@ urlpatterns = [
     path('shopping_list/', include('shopping_list.urls')),
     path('meal_plan/', include('meal_plan.urls')),
 ]
+
+handler404 = 'login_and_rego.views.handle_404'

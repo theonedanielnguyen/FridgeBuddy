@@ -33,6 +33,9 @@
     <div class="container">
         <nav class="navbar bg-info text-light">
             <h1><em>FridgeBuddy</em></h1>
+            <span class="navbar-text ml-auto mr-4">
+                HELLO <strong>{{ online_user.first_name|upper }}</strong>
+            </span>
             <button onclick="location.href='/log_out'" type="button" class="btn btn-outline-light shadow btn-md pt-1 pb-1 px-2">LOG OFF</button>
         </nav>
         <div class="container rounded-bottom pb-3" style="background-color: rgba(245, 245, 245, 0.7)">

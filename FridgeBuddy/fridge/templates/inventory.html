@@ -32,6 +32,10 @@
 
         <nav class="navbar bg-info text-light rounded-bottom">
             <h1><strong><em>FridgeBuddy</em></strong></h1>
+            <span class="navbar-text ml-auto mr-4">
+                HELLO <strong>{{ online_user.first_name|upper }}</strong>
+            </span>
+            
             <button onclick="location.href='/log_out'" type="button" class="btn btn-outline-light shadow btn-md pt-1 pb-1 px-2">LOG OFF</button>
         </nav>
 
@@ -42,7 +46,6 @@
                         <a href="/fridge/inventory" class="list-group-item list-group-item-action border-secondary active disabled">FRIDGE</a>
                         <a href="/shopping_list" class="list-group-item list-group-item-action border-secondary">Shopping List</a>
                         <a href="/meal_plan" class="list-group-item list-group-item-action border-secondary">Meal Plan</a>
-                        <!-- <a href="/fridge/leave" class="list-group-item list-group-item-action border-secondary">Leave Fridge</a> -->
                     </div>
                 </div>
             </div>
