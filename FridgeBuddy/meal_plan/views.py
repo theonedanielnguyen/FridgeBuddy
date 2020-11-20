@@ -12,6 +12,7 @@ def meal_plan_dash(request):
 
     context = {
         "online_user": User.objects.get(id=request.session['user_id']),
+        "fridge": User.objects.get(id=request.session['user_id']).fridge,
         "meals": User.objects.get(id=request.session['user_id']).fridge.meal_plan.meals.all().order_by('date')
     }
     

@@ -33,7 +33,7 @@
     <div class="container">
         <nav class="navbar bg-info text-light">
             <h1><em>FridgeBuddy</em></h1>
-            <button onclick="location.href='/log_out'" type="button" class="btn btn-outline-light shadow btn-md pt-0 pb-1 px-2">LOG OFF</button>
+            <button onclick="location.href='/log_out'" type="button" class="btn btn-outline-light shadow btn-md pt-1 pb-1 px-2">LOG OFF</button>
         </nav>
         <div class="container rounded-bottom pb-3" style="background-color: rgba(245, 245, 245, 0.7)">
             <div class="row text-center">
@@ -44,6 +44,12 @@
                         <a href="/meal_plan" class="list-group-item list-group-item-action border-secondary active disabled">MEAL PLAN</a>
                         <!-- <a href="/fridge/leave" class="list-group-item list-group-item-action border-secondary">Leave Fridge</a> -->
                     </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <h2 class="mx-2 my-2 text-center">{{fridge.name|upper}} SHOPPING LIST</h2>
                 </div>
             </div>
 
@@ -71,7 +77,7 @@
                                 <option value="Lunch">Lunch</option>
                                 <option value="Dinner">Dinner</option>
                             </select>
-                            <button class="btn btn-info mb-1" type="submit">ADD MEAL</button>
+                            <button class="btn btn-info my-2" type="submit">ADD MEAL</button>
                         </form>
                     </div>
                     <div class="col"></div>
