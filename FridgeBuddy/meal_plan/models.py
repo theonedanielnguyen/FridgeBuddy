@@ -11,7 +11,7 @@ class MealManager(models.Manager):
             errors['dish_name'] = "Please enter a dish name."
 
         # MEAL TIME VALIDATOR
-        if len(post_data['dish_time']) == 0:
+        if not post_data['dish_time']:
             errors['dish_time'] = "Please enter a meal time."
 
         # DATE VALIDATOR

@@ -156,18 +156,18 @@ def add_to_inventory(request):
 
     user_online = User.objects.get(id=request.session['user_id'])
     this_fridge = User.objects.get(id=request.session['user_id']).fridge
-    if this_fridge.contents.filter(name=request.POST['item_name']).exists():
-        if request.POST['unit'] != user_online.fridge.contents.get(name=request.POST['item_name']).unit:
+    if this_fridge.contents.filter(name=request.POST['item_name'].capitalize()).exists():
+        if request.POST['unit'] != user_online.fridge.contents.get(name=request.POST['item_name'].capitalize()).unit:
             messages.error(request, "Units must match the unit of the target item", extra_tags="add")
             return redirect('/fridge/inventory')
-        new_value = this_fridge.contents.get(name=request.POST['item_name']).quantity
+        new_value = this_fridge.contents.get(name=request.POST['item_name'].capitalize()).quantity
         new_value += float(request.POST['quantity'])
-        ingredient = this_fridge.contents.get(name=request.POST['item_name'])
+        ingredient = this_fridge.contents.get(name=request.POST['item_name'].capitalize())
         ingredient.quantity = new_value
         ingredient.save()
 
     else:
-        new_item_name = request.POST['item_name']
+        new_item_name = request.POST['item_name'].capitalize()
         new_item_quantity = request.POST['quantity']
         new_item_unit = request.POST['unit']
 
@@ -189,21 +189,21 @@ def remove_from_inventory(request):
 
     user_online = User.objects.get(id=request.session['user_id'])
 
-    if user_online.fridge.contents.filter(name=request.POST['item_name']).exists() == False:
+    if user_online.fridge.contents.filter(name=request.POST['item_name'].capitalize()).exists() == False:
         messages.error(request, "Item does not exist in fridge", extra_tags="remove")
         return redirect('/fridge/inventory')
 
-    if int(request.POST['quantity']) > user_online.fridge.contents.get(name=request.POST['item_name']).quantity: 
+    if int(request.POST['quantity']) > user_online.fridge.contents.get(name=request.POST['item_name'].capitalize()).quantity: 
         messages.error(request, "Quantity removed may not be greater than quantity possessed", extra_tags="remove")
         return redirect ('/fridge/inventory')
 
-    if request.POST['unit'] != user_online.fridge.contents.get(name=request.POST['item_name']).unit:
+    if request.POST['unit'] != user_online.fridge.contents.get(name=request.POST['item_name'].capitalize()).unit:
         messages.error(request, "Units must match the unit of the target item", extra_tags="remove")
         return redirect('/fridge/inventory')
 
-    new_value = user_online.fridge.contents.get(name=request.POST['item_name']).quantity
+    new_value = user_online.fridge.contents.get(name=request.POST['item_name'].capitalize()).quantity
     new_value -= int(request.POST['quantity'])
-    ingredient = user_online.fridge.contents.get(name=request.POST['item_name'])
+    ingredient = user_online.fridge.contents.get(name=request.POST['item_name'].capitalize())
     ingredient.quantity = new_value
     ingredient.save()
 
