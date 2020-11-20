@@ -1,16 +1,29 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, render_to_response
+from django.template import RequestContext
 from django.contrib import messages
 from .models import User
 import bcrypt
+
+def welcome(request):
+    if 'user_id' in request.session:
+        return redirect('/fridge/inventory')
+
+    return render(request, 'welcome.html')
 
 def login_page(request):
     if 'not_logged_in' in request.session:
         messages.error(request, request.session['not_logged_in'], extra_tags="login")
         del request.session['not_logged_in'] 
 
+    if 'user_id' in request.session:
+        return redirect('/fridge/inventory')
+
     return render(request, 'login.html')
 
 def registration_page(request):
+    if 'user_id' in request.session:
+        return redirect('/fridge/inventory')
+
     return render(request, 'registration.html')
 
 def registration(request):
@@ -71,6 +84,9 @@ def log_out(request):
 
     return redirect('/login_page')
 
+def handle_404(request, exception, template_name="404.html"):
+    response = render_to_response(template_name)
+    response.status_code = 404
+    return response
 
-def welcome(request):
-    return render(request, 'welcome.html')
+
