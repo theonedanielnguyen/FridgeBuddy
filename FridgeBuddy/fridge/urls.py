@@ -10,5 +10,6 @@ urlpatterns = [
     path('leave', views.leave_fridge),
     path('inventory', views.display_inventory),
     path('inventory/add_item', views.add_to_inventory),
-    path('inventory/remove_item', views.remove_from_inventory)
+    path('inventory/remove_item', views.remove_from_inventory),
+    path('inventory/add_to_shopping', views.add_to_shopping)
 ]

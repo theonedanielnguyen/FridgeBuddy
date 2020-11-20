@@ -2,7 +2,7 @@ from django.shortcuts import render, HttpResponse, redirect
 from django.contrib import messages
 from login_and_rego.models import User
 from .models import Fridge, FridgeIngredient
-from shopping_list.models import ShoppingList
+from shopping_list.models import ShoppingList, ShoppingIngredient
 from meal_plan.models import MealPlan
 import bcrypt
 
@@ -190,4 +190,22 @@ def remove_from_inventory(request):
     if ingredient.quantity == 0:
         ingredient.delete()
 
+    return redirect('/fridge/inventory')
+
+def add_to_shopping(request):
+    user_online = User.objects.get(id=request.session['user_id'])
+    if user_online.fridge.shopping_list.contents.filter(name=request.POST['item_name']).exists():
+        new_value = user_online.fridge.shopping_list.contents.get(name=request.POST['item_name']).quantity
+        new_value += float(request.POST['quantity'])
+        ingredient = user_online.fridge.shopping_list.contents.get(name=request.POST['item_name'])
+        ingredient.quantity = new_value
+        ingredient.save()
+
+    else:
+        ShoppingIngredient.objects.create(
+            name = request.POST['item_name'],
+            quantity = float(request.POST['quantity']),
+            unit = request.POST['unit'],
+            shopping_list = user_online.fridge.shopping_list,
+        )
     return redirect('/fridge/inventory')

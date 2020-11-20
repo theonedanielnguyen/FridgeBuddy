@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{fridge.name}} Inventory</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <style>
         body {
             background-image: url('https://cdn.hipwallpaper.com/i/14/86/JyYN9l.jpeg');
@@ -16,7 +17,7 @@
 <body>
     <div class="container">
         <nav class="navbar bg-primary text-light rounded-bottom">
-            <h1><strong><em>Welcome to FridgeBuddy!</em></strong></h1>
+            <h1><strong><em>FridgeBuddy</em></strong></h1>
             <button onclick="location.href='/log_out'" type="button" class="btn btn-outline-light shadow btn-sm pt-0 pb-1 px-2">Log Off</button>
         </nav>
 
@@ -80,6 +81,7 @@
                             <tr>
                                 <th class="py-1">ITEM NAME</th>
                                 <th class="py-1">QUANTITY</th>
+                                <th class="py-1">MORE</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -87,6 +89,9 @@
                             <tr>
                                 <td class="py-1">{{item.name}}</td>
                                 <td class="py-1">{{item.quantity|floatformat:"-2"}} {{item.unit}}</td>
+                                <td class="py-1">
+                                    <button type="button" class="btn btn-primary btn-sm py-0" data-toggle="modal" data-target="#addModal" data-name="{{item.name}}" data-unit="{{item.unit}}">Buy</button>
+                                </td>
                             </tr>
                         {% endfor%}
                         </tbody>
@@ -141,8 +146,60 @@
             </div> -->
         </div>
     </div>
+<!-- Modal tester -->
+    <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ModalLabel">Add to Shopping List</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/fridge/inventory/add_to_shopping" id="add_form" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="item_name">
+                        <label for="quantity" class="col-form-label">How much?</label>
+                        <input type="number" min="0" step=".01" class="form-control" name="quantity">
+                        <select name="unit" class="form-control col">
+                            <option value="of them">of them</option>
+                            <option value="bottles">bottle(s)</option>
+                            <option value="boxes">box(es)</option>
+                            <option value="cans">can(s)</option>
+                            <option value="grams">gram(s)</option>
+                            <option value="kilos">kilo(s)</option>
+                            <option value="pounds">lbs</option>
+                            <option value="ounces">oz</option>
+                            <option value="liters">litre(s)</option>
+                            <option value="milliliters">milliliter(s)</option>
+                            <option value="pints">pint(s)</option>
+                            <option value="%">%</option>
+                        </select>
+
+                        
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" form="add_form" class="btn btn-primary">Add to Shopping List</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+<script>
+    $('#addModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget)
+        var name = button.data('name')
+        var unit = button.data('unit')
+        var modal = $(this)
+        modal.find('.modal-title').text('Add ' + name + ' to Shopping List')
+        modal.find('.modal-body select').val(unit)
+        modal.find('.modal-body input[name="item_name"]').val(name)
+        })
+</script>
 </body>
 </html>
