@@ -212,6 +212,8 @@ def remove_from_inventory(request):
 
     return redirect('/fridge/inventory')
 
+# ADD TO SHOPPING LIST
+
 def add_to_shopping(request):
     user_online = User.objects.get(id=request.session['user_id'])
     if user_online.fridge.shopping_list.contents.filter(name=request.POST['item_name']).exists():
