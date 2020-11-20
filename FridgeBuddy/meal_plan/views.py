@@ -8,7 +8,7 @@ from .models import *
 def meal_plan_dash(request):
     if 'user_id' not in request.session:
         request.session['not_logged_in'] = "Please log in for access"
-        return redirect('/')
+        return redirect('/login_page')
 
     context = {
         "online_user": User.objects.get(id=request.session['user_id']),
@@ -20,7 +20,7 @@ def meal_plan_dash(request):
 def add_meal(request):
     if 'user_id' not in request.session:
         request.session['not_logged_in'] = "Please log in for access"
-        return redirect('/')
+        return redirect('/login_page')
 
     errors = Meal.objects.add_meal_validator(request.POST)
 
@@ -46,7 +46,7 @@ def add_meal(request):
 def remove_meal(request, meal_id):
     if 'user_id' not in request.session:
         request.session['not_logged_in'] = "Please log in for access"
-        return redirect('/')
+        return redirect('/login_page')
 
     meal_to_delete = Meal.objects.get(id=meal_id)
     meal_to_delete.delete()
