@@ -122,10 +122,15 @@
                         <h5>REMOVE ITEM</h5>
                         <form action="/shopping_list/remove_from_list" method="POST">
                             {% csrf_token %}
-                            <input type="text" name="ingredient" id="ingredient" placeholder="Item Name" class="form-control mx-1 my-1">
+                            <select name="ingredient" id="ingredient" class="form-control" {% if not shopping_list %}disabled{% endif %}>
+                                {% for i in shopping_list %}
+                                    <option value="{{i.name}}">{{i.name}}</option>
+                                {% endfor %}
+                            </select>
+                            <!-- <input type="text" name="ingredient" id="ingredient" placeholder="Item Name" class="form-control mx-1 my-1"> -->
                             <div class="form-row px-1">
-                                <input type="number" name="quantity" id="quantity" placeholder=0 value=0 step=".01" class="form-control col mx-1 my-1">
-                                <select name="unit" id="unit" class="form-control col mx-1 my-1">
+                                <input type="number" name="quantity" id="quantity" placeholder=0 value=0 step=".01" class="form-control col mx-1 my-1" {% if not shopping_list %}disabled{% endif %}>
+                                <select name="unit" id="unit" class="form-control col mx-1 my-1" {% if not shopping_list %}disabled{% endif %}>
                                     <option value="count">count</option>
                                     <option value="bottles">bottle(s)</option>
                                     <option value="boxes">box(es)</option>
@@ -141,7 +146,7 @@
                                 </select>
                             </div>
                             
-                            <button class="btn btn-danger shadow mt-2">REMOVE ITEM</button>
+                            <button class="btn btn-danger shadow mt-1" {% if not shopping_list %}disabled{% endif %}>REMOVE ITEM</button>
                         </form>
                         {% if messages %}
                             <ul class="mt-2 mb-1">   
