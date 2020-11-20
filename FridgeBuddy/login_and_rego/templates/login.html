@@ -35,7 +35,7 @@
                             <ul>
                                 {% for message in messages %} 
                                     {% if 'login' in message.extra_tags %}
-                                        <li>{{ message }}</li>
+                                        <li class="text-danger">{{ message }}</li>
                                     {% endif %}
                                 {% endfor %}
                             </ul>

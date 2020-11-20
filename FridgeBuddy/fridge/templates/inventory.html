@@ -61,7 +61,7 @@
                             <div class="form-row px-1">
                             <input type="number" min="0" step="0.01" name="quantity" placeholder="0" class="form-control col mx-1 my-1">
                                 <select name="unit" class="form-control col mx-1 my-1">
-                                    <option value="of them">of them</option>
+                                    <option value="count">count</option>
                                     <option value="bottles">bottle(s)</option>
                                     <option value="boxes">box(es)</option>
                                     <option value="cans">can(s)</option>
@@ -81,7 +81,7 @@
                             <ul class="mt-2 mb-1">
                                 {% for message in messages %}   
                                     {% if 'add' in message.extra_tags %}
-                                        <li>{{ message }}</li>
+                                        <li class="text-danger">{{ message }}</li>
                                     {% endif %}
                                 {% endfor %}
                             </ul>
@@ -120,7 +120,7 @@
                             <div class="form-row px-1">
                                 <input type="number" min="0" step="0.01" name="quantity" placeholder="0" class="form-control col mx-1 my-1">
                                 <select name="unit" class="form-control col mx-1 my-1">
-                                    <option value="of them">of them</option>
+                                    <option value="count">count</option>
                                     <option value="bottles">bottle(s)</option>
                                     <option value="boxes">box(es)</option>
                                     <option value="cans">can(s)</option>
@@ -140,7 +140,7 @@
                             <ul class="mt-2 mb-1">
                                 {% for message in messages %} 
                                     {% if 'remove' in message.extra_tags %}
-                                        <li>{{ message }}</li>
+                                        <li class="text-danger">{{ message }}</li>
                                     {% endif %}
                                 {% endfor %}
                             </ul>
@@ -180,9 +180,9 @@
                         {% csrf_token %}
                         <input type="hidden" name="item_name">
                         <label for="quantity" class="col-form-label">How much?</label>
-                        <input type="number" min="0" step=".01" class="form-control" name="quantity">
+                        <input type="number" min="0" step=".01" class="form-control mb-2" name="quantity">
                         <select name="unit" class="form-control col">
-                            <option value="of them">of them</option>
+                            <option value="count">count</option>
                             <option value="bottles">bottle(s)</option>
                             <option value="boxes">box(es)</option>
                             <option value="cans">can(s)</option>
