@@ -38,19 +38,19 @@ def add_to_list(request):
         return redirect('/shopping_list')
 
     user = User.objects.get(id=request.session['user_id'])
-    if user.fridge.shopping_list.contents.filter(name=request.POST['ingredient'].capitalize()).exists():
-        if request.POST['unit'] != user.fridge.shopping_list.contents.get(name=request.POST['ingredient'].capitalize()).unit:
+    if user.fridge.shopping_list.contents.filter(name=request.POST['ingredient'].title()).exists():
+        if request.POST['unit'] != user.fridge.shopping_list.contents.get(name=request.POST['ingredient'].title()).unit:
             messages.error(request, "Units must match the unit of the target item", extra_tags="add")
             return redirect('/fridge/inventory')
-        new_value = user.fridge.shopping_list.contents.get(name=request.POST['ingredient'].capitalize()).quantity
+        new_value = user.fridge.shopping_list.contents.get(name=request.POST['ingredient'].title()).quantity
         new_value += float(request.POST['quantity'])
-        ingredient = user.fridge.shopping_list.contents.get(name=request.POST['ingredient'].capitalize())
+        ingredient = user.fridge.shopping_list.contents.get(name=request.POST['ingredient'].title())
         ingredient.quantity = new_value
         ingredient.save()
 
     else:
         ShoppingIngredient.objects.create(
-            name = request.POST['ingredient'].capitalize(),
+            name = request.POST['ingredient'].title(),
             quantity = float(request.POST['quantity']),
             unit = request.POST['unit'],
             shopping_list = user.fridge.shopping_list,
@@ -71,21 +71,21 @@ def remove_from_list(request):
         return redirect('/shopping_list')
 
     user = User.objects.get(id=request.session['user_id'])
-    if user.fridge.shopping_list.contents.filter(name=request.POST['ingredient'].capitalize()).exists() == False:
+    if user.fridge.shopping_list.contents.filter(name=request.POST['ingredient'].title()).exists() == False:
         messages.error(request, "Item does not exist in shopping list", extra_tags="remove")
         return redirect('/shopping_list')
 
-    if float(request.POST['quantity']) > user.fridge.shopping_list.contents.get(name=request.POST['ingredient'].capitalize()).quantity:
+    if float(request.POST['quantity']) > user.fridge.shopping_list.contents.get(name=request.POST['ingredient'].title()).quantity:
         messages.error(request,"Quantity removed may not be greater than quantity possessed", extra_tags="remove")
         return redirect('/shopping_list')
 
-    if request.POST['unit'] != user.fridge.shopping_list.contents.get(name=request.POST['ingredient'].capitalize()).unit:
+    if request.POST['unit'] != user.fridge.shopping_list.contents.get(name=request.POST['ingredient'].title()).unit:
         messages.error(request, "Units must match the unit of the target item", extra_tags="remove")
         return redirect('/shopping_list')
 
-    new_value = user.fridge.shopping_list.contents.get(name=request.POST['ingredient'].capitalize()).quantity
+    new_value = user.fridge.shopping_list.contents.get(name=request.POST['ingredient'].title()).quantity
     new_value -= float(request.POST['quantity'])
-    ingredient = user.fridge.shopping_list.contents.get(name=request.POST['ingredient'].capitalize())
+    ingredient = user.fridge.shopping_list.contents.get(name=request.POST['ingredient'].title())
     ingredient.quantity = new_value
     ingredient.save()
 
