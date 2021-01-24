@@ -70,4 +70,4 @@
 
 
 ## Sample Photos:
-  ![Welcome](./READMEPics/Welcome.png "Welcome Page")
+  ![Welcome](READMEPics/Welcome.PNG "Welcome Page")
