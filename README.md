@@ -67,3 +67,7 @@
 
 ## Interactive Wireframe: 
   https://xd.adobe.com/view/554c3a37-643b-49a4-ac15-2ed6bb39fce9-001f/
+
+
+## Sample Photos:
+  [Welcome](./READMEPics/Welcome.png "Welcome Page")
