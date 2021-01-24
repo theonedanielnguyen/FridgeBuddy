@@ -71,3 +71,7 @@
 
 ## Sample Photos:
   ![Welcome](READMEPics/Welcome.PNG "Welcome Page")
+  ![Registration](READMEPics/Registration.PNG "Registration")
+  ![FridgeView](READMEPics/FridgeView.PNG "Fridge View")
+  
+  More photos are available in the [READMEPics file](/READMEPics).
